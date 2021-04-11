@@ -3,7 +3,6 @@ package com.magician.web.execute;
 import com.magician.web.core.cache.MagicianCacheManager;
 import com.magician.web.core.constant.MagicianWebConstant;
 import com.magician.web.core.model.RouteModel;
-import com.magician.web.core.util.BuildParams;
 import com.magician.web.core.util.JSONUtil;
 import com.magician.web.core.util.MesUtil;
 import com.magician.web.core.util.ParamsCheckUtil;
