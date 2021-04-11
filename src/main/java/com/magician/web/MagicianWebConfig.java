@@ -1,14 +1,23 @@
 package com.magician.web;
 
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * Web配置
+ */
 public class MagicianWebConfig {
 
-    private static String scanPath;
+    private static Set<String> scanPath;
 
-    public static String getScanPath() {
+    public static Set<String> getScanPath() {
         return scanPath;
     }
 
     public static void setScanPath(String scanPath) {
-        MagicianWebConfig.scanPath = scanPath;
+        if(MagicianWebConfig.scanPath == null){
+            MagicianWebConfig.scanPath = new HashSet<>();
+        }
+        MagicianWebConfig.scanPath.add(scanPath);
     }
 }

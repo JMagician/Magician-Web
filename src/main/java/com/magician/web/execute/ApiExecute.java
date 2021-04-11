@@ -2,6 +2,8 @@ package com.magician.web.execute;
 
 import com.magician.web.core.cache.MagicianCacheManager;
 import com.magician.web.core.constant.MagicianWebConstant;
+import com.magician.web.core.interceptor.MagicianInterceptor;
+import com.magician.web.core.model.InterceptorModel;
 import com.magician.web.core.model.RouteModel;
 import com.magician.web.core.util.JSONUtil;
 import com.magician.web.core.util.MesUtil;
@@ -11,6 +13,7 @@ import io.magician.tcp.http.request.MagicianRequest;
 
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,12 +50,29 @@ public class ApiExecute {
             return;
         }
 
+        /* 获取这个路由对应的拦截器 */
+        List<InterceptorModel> interceptorModelList = InterceptorExecute.getInterceptorModelList(url);
+
+        /* 执行拦截器的before */
+        Object interResult = InterceptorExecute.before(interceptorModelList, request);
+        if(!MagicianInterceptor.SUCCESS.equals(String.valueOf(interResult))){
+            sendText(request, String.valueOf(interResult));
+            return;
+        }
+
         /* 执行Controller */
         Object result = null;
         if(params == null){
             result = method.invoke(routeModel.getObject());
         } else {
             result = method.invoke(routeModel.getObject(), params);
+        }
+
+        /* 执行拦截器的after */
+        interResult = InterceptorExecute.after(interceptorModelList, request, result);
+        if(!MagicianInterceptor.SUCCESS.equals(String.valueOf(interResult))){
+            sendText(request, String.valueOf(interResult));
+            return;
         }
 
         /* 如果返回的是个流，就直接响应流 */

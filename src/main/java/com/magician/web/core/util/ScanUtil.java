@@ -1,10 +1,8 @@
 package com.magician.web.core.util;
 
-import com.magician.web.core.ReadClass;
 import com.magician.web.core.cache.MagicianCacheManager;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,10 +16,10 @@ public class ScanUtil {
      * @return 扫描出来的包
      * @throws Exception 异常
      */
-    public static Set<String> scanClassList(List<String> packageName) throws Exception {
+    public static Set<String> scanClassList(Set<String> packageName) throws Exception {
         Set<String> scanClassList = new HashSet<>();
         for(String pkName : packageName){
-            Set<String> classList = ReadClass.loadClassList(pkName);
+            Set<String> classList = ReadClassUtil.loadClassList(pkName);
             scanClassList.addAll(classList);
         }
         MagicianCacheManager.saveScanClassList(scanClassList);

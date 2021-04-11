@@ -1,10 +1,15 @@
 package com.magician.web.load;
 
 import com.magician.web.MagicianWebConfig;
+import com.magician.web.core.annotation.Interceptor;
 import com.magician.web.core.annotation.Route;
 import com.magician.web.core.cache.MagicianCacheManager;
+import com.magician.web.core.constant.MagicianWebConstant;
+import com.magician.web.core.model.InterceptorModel;
 import com.magician.web.core.model.RouteModel;
+import com.magician.web.core.util.MatchUtil;
 import com.magician.web.core.util.ScanUtil;
+import io.magician.tcp.http.request.MagicianRequest;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -26,10 +31,56 @@ public class ApiLoad {
         }
 
         /* 扫描包下的类 */
-        List<String> packages = new ArrayList<>();
-        packages.add(MagicianWebConfig.getScanPath());
-        scanClassList = ScanUtil.scanClassList(packages);
+        scanClassList = ScanUtil.scanClassList(MagicianWebConfig.getScanPath());
 
+        /* 筛选并创建拦截器和接口 */
+        Map<String, InterceptorModel> interceptorModelMap = scanInterceptor(scanClassList);
+        scanRoute(scanClassList);
+
+        /* 将拦截器跟route比对后，分类存放 */
+        Map<String, RouteModel> routeModelMap = MagicianCacheManager.getRouteMap();
+        if(routeModelMap != null && routeModelMap.size() > 0){
+            for(String routePath : routeModelMap.keySet()){
+                for(String interPattern : interceptorModelMap.keySet()) {
+                    if (MatchUtil.isMatch(interPattern, routePath)) {
+                        MagicianCacheManager.setInterceptorMap(routePath, interceptorModelMap.get(interPattern));
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 扫描拦截器
+     * @param scanClassList
+     */
+    private static Map<String, InterceptorModel> scanInterceptor(Set<String> scanClassList) throws Exception {
+        Map<String, InterceptorModel> interceptorModelMap = new HashMap<>();
+        for(String className : scanClassList){
+            Class<?> cls = Class.forName(className);
+            Interceptor interceptor = cls.getAnnotation(Interceptor.class);
+            if(interceptor == null){
+                continue;
+            }
+
+            InterceptorModel interceptorModel = new InterceptorModel();
+            interceptorModel.setCls(cls);
+            interceptorModel.setObject(cls.getDeclaredConstructor().newInstance());
+            interceptorModel.setBeforeMethod(cls.getMethod(MagicianWebConstant.BEFORE, new Class[]{MagicianRequest.class}));
+            interceptorModel.setAfterMethod(cls.getMethod(MagicianWebConstant.AFTER, new Class[]{MagicianRequest.class, Object.class}));
+
+            interceptorModelMap.put(interceptor.pattern().toUpperCase(), interceptorModel);
+        }
+
+        return interceptorModelMap;
+    }
+
+    /**
+     * 扫描接口
+     * @param scanClassList
+     * @throws Exception
+     */
+    private static void scanRoute(Set<String> scanClassList) throws Exception {
         /* 从这些类中获取接口 */
         Map<String, RouteModel> routeModelMap = new HashMap<>();
         for(String className : scanClassList){

@@ -1,4 +1,4 @@
-package com.magician.web.core;
+package com.magician.web.core.util;
 
 import com.magician.web.core.constant.MagicianWebConstant;
 import org.slf4j.Logger;
@@ -23,9 +23,9 @@ import java.util.jar.JarFile;
  * @author yuye
  *
  */
-public class ReadClass {
+public class ReadClassUtil {
 	
-	private static Logger log = LoggerFactory.getLogger(ReadClass.class);
+	private static Logger log = LoggerFactory.getLogger(ReadClassUtil.class);
 	
 
 	/**

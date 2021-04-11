@@ -38,7 +38,7 @@ public class MagicianWeb {
      */
     public void request(MagicianRequest request){
         try {
-            /* 加载接口 */
+            /* 加载资源 */
             ApiLoad.load();
 
             /* 执行业务逻辑 */
