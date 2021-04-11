@@ -2,6 +2,9 @@ package com.magician.web.core.constant;
 
 public class MagicianWebConstant {
 
+    /**
+     * UTF-8编码
+     */
     public static final String ENCODING = "UTF-8";
 
     /**
