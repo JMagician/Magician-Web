@@ -54,7 +54,7 @@ Magician-Web 是 Magician的官方Web组件，实现了以Controller的方式来
 @Route("/demoController")
 public class DemoController {
 
-    @Route(value = "/com/demo", requestMethod = ReqMethod.POST)
+    @Route(value = "/demo", requestMethod = ReqMethod.POST)
     public DemoVO demo(DemoVO demoVO){
         return demoVO;
     }
