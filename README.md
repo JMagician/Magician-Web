@@ -72,5 +72,6 @@ Magician.createHttpServer().httpHandler("/", req -> {
                     }).bind(8080).start();
 ```
 
-## 开发文档
-准备中......
+## 开发资源
+- 开发文档: [http://magician-io.com/docs/index.html](http://magician-io.com/docs/web/index.html)
+- 使用示例: [https://github.com/yuyenews/Magician-Web-Example](https://github.com/yuyenews/Magician-Web-Example)

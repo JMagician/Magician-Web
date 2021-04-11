@@ -1,5 +1,6 @@
 package com.magician.web.core.util;
 
+import com.magician.web.core.annotation.Route;
 import com.magician.web.core.annotation.Verification;
 import io.magician.tcp.http.request.MagicianRequest;
 import org.slf4j.Logger;
@@ -144,8 +145,13 @@ public class ParamsCheckUtil {
         if(apis == null || apis.length < 1){
             return true;
         }
+        Route route = method.getAnnotation(Route.class);
+        if(route == null){
+            return false;
+        }
+
         for(String api : apis){
-            if(MatchUtil.isMatch(api,method.getName())){
+            if(MatchUtil.isMatch(api,route.value())){
                 return true;
             }
         }
