@@ -47,8 +47,7 @@ public class MagicianWeb {
             logger.error("执行MagicianWeb出现异常", e);
 
             request.getResponse()
-                    .setResponseHeader("content-type", "application/json;charset="+ MagicianWebConstant.ENCODING)
-                    .sendText(200, MesUtil.getMes(500, e.getMessage()));
+                    .sendJson(200, MesUtil.getMes(500, e.getMessage()));
         }
     }
 }

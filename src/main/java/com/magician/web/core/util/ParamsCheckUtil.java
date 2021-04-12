@@ -21,10 +21,10 @@ public class ParamsCheckUtil {
     /**
      * 校验参数
      * @param params 参数集合
-     * @param method 要执行的方法
+     * @param url 路径
      * @return 校验结果
      */
-    public static String checkParam(Object[] params, Method method){
+    public static String checkParam(Object[] params, String url){
         if(params == null){
             return null;
         }
@@ -38,7 +38,7 @@ public class ParamsCheckUtil {
             if(requestClass.equals(cls)){
                 continue;
             }
-            String result = checkParam(cls,obj,method);
+            String result = checkParam(cls, obj, url);
             if(result != null){
                 return result;
             }
@@ -52,7 +52,7 @@ public class ParamsCheckUtil {
      * @param obj 参数对象
      * @return 校验结果
      */
-    private static String checkParam(Class<?> cls, Object obj, Method method) {
+    private static String checkParam(Class<?> cls, Object obj, String url) {
         try {
             Field[] fields = cls.getDeclaredFields();
             for(Field field : fields){
@@ -65,7 +65,7 @@ public class ParamsCheckUtil {
 
                 /* 判断此注解是否生效与当前api，如果不生效那就直接跳入下一次循环 */
                 String[] apis = verification.apis();
-                if(!isThisApi(apis,method)){
+                if(!isThisApi(apis, url)){
                     continue;
                 }
 
@@ -137,21 +137,17 @@ public class ParamsCheckUtil {
 
     /**
      * 校验apis列表里是否包含此api
-     * @param method 此api
+     * @param url 此api
      * @param apis api列表
      * @return
      */
-    private static boolean isThisApi(String[] apis, Method method){
+    private static boolean isThisApi(String[] apis, String url){
         if(apis == null || apis.length < 1){
             return true;
         }
-        Route route = method.getAnnotation(Route.class);
-        if(route == null){
-            return false;
-        }
 
         for(String api : apis){
-            if(MatchUtil.isMatch(api,route.value())){
+            if(MatchUtil.isMatch(api.toUpperCase(), url.toUpperCase())){
                 return true;
             }
         }

@@ -21,7 +21,7 @@ Magician的官方Web组件
 
 ## 项目简介
 
-Magician-Web 是 Magician的官方Web组件，实现了以Controller的方式来进行参数的接口和响应
+Magician-Web 是 Magician的官方Web组件，实现了以Controller的方式来进行参数的接收和响应
 
 ## 安装步骤
 
@@ -71,6 +71,11 @@ Magician.createHttpServer().httpHandler("/", req -> {
 
                     }).bind(8080).start();
 ```
+## 除此之外还实现了以下功能
+
+1. 自定义拦截器
+2. 注解式参数校验
+3. 自带JWT管理类
 
 ## 开发资源
 - 开发文档: [http://magician-io.com/docs/index.html](http://magician-io.com/docs/web/index.html)

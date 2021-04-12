@@ -33,8 +33,10 @@ public class ApiLoad {
         /* 扫描包下的类 */
         scanClassList = ScanUtil.scanClassList(MagicianWebConfig.getScanPath());
 
-        /* 筛选并创建拦截器和接口 */
+        /* 筛选并创建拦截器 */
         Map<String, InterceptorModel> interceptorModelMap = scanInterceptor(scanClassList);
+
+        /* 筛选并创建接口 */
         scanRoute(scanClassList);
 
         /* 将拦截器跟route比对后，分类存放 */
@@ -97,11 +99,16 @@ public class ApiLoad {
                         throw new Exception("["+method+"]方法没有返回类型");
                     }
 
+                    String path = getRoute(methodRoute, clsRoute);
+                    if(routeModelMap.containsKey(path)){
+                        throw new Exception("["+path+"]Route有重复");
+                    }
+
                     RouteModel routeModel = new RouteModel();
                     routeModel.setCls(cls);
                     routeModel.setMethod(method);
                     routeModel.setReqMethods(methodRoute.requestMethod());
-                    routeModel.setRoute(getRoute(methodRoute, clsRoute));
+                    routeModel.setRoute(path);
                     routeModel.setObject(cls.getDeclaredConstructor().newInstance());
 
                     routeModelMap.put(routeModel.getRoute(), routeModel);

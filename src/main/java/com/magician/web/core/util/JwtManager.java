@@ -31,23 +31,28 @@ public class JwtManager {
      */
     private int calendarInterval = 86400;
 
-    private static JwtManager jwtManager = new JwtManager();
-    private JwtManager(){}
-
-    public static JwtManager getJwtManager() {
-        return jwtManager;
-    }
-
-    public void setSecret(String secret) {
+    public JwtManager setSecret(String secret) {
         this.secret = secret;
+        return this;
     }
 
-    public void setCalendarField(int calendarField) {
+    public JwtManager setCalendarField(int calendarField) {
         this.calendarField = calendarField;
+        return this;
     }
 
-    public void setCalendarInterval(int calendarInterval) {
+    public JwtManager setCalendarInterval(int calendarInterval) {
         this.calendarInterval = calendarInterval;
+        return this;
+    }
+
+    /**
+     * 创建一个JWT管理类
+     * @return
+     */
+    public static JwtManager builder() {
+        JwtManager jwtManager = new JwtManager();
+        return jwtManager;
     }
 
     /**

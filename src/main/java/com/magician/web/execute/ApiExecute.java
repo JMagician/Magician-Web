@@ -44,7 +44,7 @@ public class ApiExecute {
         Object[] params = BuildParams.builder(method, request);
 
         /* 校验传参 */
-        String checkResult = ParamsCheckUtil.checkParam(params,method);
+        String checkResult = ParamsCheckUtil.checkParam(params, url);
         if(checkResult != null){
             sendText(request, checkResult);
             return;
@@ -77,9 +77,10 @@ public class ApiExecute {
 
         /* 如果返回的是个流，就直接响应流 */
         if(result instanceof InputStream){
-            request.getResponse()
-                    .setResponseHeader("content-type", "application/octet-stream")
-                    .sendResponseBody((InputStream) result);
+            request.getResponse().sendStream((InputStream) result);
+            return;
+        } else if(result instanceof byte[]){
+            request.getResponse().sendStream((byte[]) result);
             return;
         }
 
@@ -94,8 +95,7 @@ public class ApiExecute {
      */
     private static void sendText(MagicianRequest request, String text){
         request.getResponse()
-                .setResponseHeader("content-type", "application/json;charset="+ MagicianWebConstant.ENCODING)
-                .sendText(200, text);
+                .sendJson(200, text);
     }
 
     /**
