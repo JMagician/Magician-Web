@@ -78,5 +78,5 @@ Magician.createHttpServer().httpHandler("/", req -> {
 3. 自带JWT管理类
 
 ## 开发资源
-- 开发文档: [http://magician-io.com/docs/index.html](http://magician-io.com/docs/web/index.html)
+- 开发文档: [http://magician-io.com/docs/web/index.html](http://magician-io.com/docs/web/web/index.html)
 - 使用示例: [https://github.com/yuyenews/Magician-Web-Example](https://github.com/yuyenews/Magician-Web-Example)
