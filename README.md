@@ -1,5 +1,7 @@
+<br/>
+
 <div align=center>
-<img width="200px;" src="http://mars-framework.com/img/logo-black.png"/>
+<img width="260px;" src="http://magician-io.com/img/logo-black.png"/>
 </div>
 
 <br/>
