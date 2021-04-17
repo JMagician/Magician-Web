@@ -8,10 +8,10 @@ import com.magician.web.core.model.RouteModel;
 import com.magician.web.core.util.JSONUtil;
 import com.magician.web.core.util.MesUtil;
 import com.magician.web.core.util.ParamsCheckUtil;
+import com.magician.web.execute.model.ResponseInputStream;
 import io.magician.tcp.http.constant.ReqMethod;
 import io.magician.tcp.http.request.MagicianRequest;
 
-import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
@@ -76,11 +76,9 @@ public class ApiExecute {
         }
 
         /* 如果返回的是个流，就直接响应流 */
-        if(result instanceof InputStream){
-            request.getResponse().sendStream((InputStream) result);
-            return;
-        } else if(result instanceof byte[]){
-            request.getResponse().sendStream((byte[]) result);
+        if(result instanceof ResponseInputStream){
+            ResponseInputStream inputStream = (ResponseInputStream)result;
+            request.getResponse().sendStream(inputStream.getName(), inputStream.getInputStream());
             return;
         }
 
