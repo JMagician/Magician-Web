@@ -3,7 +3,7 @@ package com.magician.web.execute;
 import com.magician.web.core.cache.MagicianCacheManager;
 import com.magician.web.core.interceptor.MagicianInterceptor;
 import com.magician.web.core.model.InterceptorModel;
-import io.magician.tcp.http.request.MagicianRequest;
+import io.magician.tcp.codec.impl.http.request.MagicianRequest;
 
 import java.util.List;
 import java.util.Map;
@@ -40,7 +40,7 @@ public class InterceptorExecute {
         }
 
         for(InterceptorModel interceptorModel : interceptorModelList){
-            Object result = interceptorModel.getBeforeMethod().invoke(interceptorModel.getObject(), new Object[]{request});
+            Object result = interceptorModel.getMagicianInterceptor().before(request);
             if(!MagicianInterceptor.SUCCESS.equals(String.valueOf(result))){
                 return result;
             }
@@ -63,7 +63,7 @@ public class InterceptorExecute {
         }
 
         for(InterceptorModel interceptorModel : interceptorModelList){
-            Object result = interceptorModel.getAfterMethod().invoke(interceptorModel.getObject(), new Object[]{request, apiResult});
+            Object result = interceptorModel.getMagicianInterceptor().after(request, apiResult);
             if(!MagicianInterceptor.SUCCESS.equals(String.valueOf(result))){
                 return result;
             }

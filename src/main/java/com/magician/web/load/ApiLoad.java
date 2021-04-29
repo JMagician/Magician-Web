@@ -9,7 +9,7 @@ import com.magician.web.core.model.InterceptorModel;
 import com.magician.web.core.model.RouteModel;
 import com.magician.web.core.util.MatchUtil;
 import com.magician.web.core.util.ScanUtil;
-import io.magician.tcp.http.request.MagicianRequest;
+import io.magician.tcp.codec.impl.http.request.MagicianRequest;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -67,7 +67,7 @@ public class ApiLoad {
 
             InterceptorModel interceptorModel = new InterceptorModel();
             interceptorModel.setCls(cls);
-            interceptorModel.setObject(cls.getDeclaredConstructor().newInstance());
+            interceptorModel.setMagicianInterceptor(cls.getDeclaredConstructor().newInstance());
             interceptorModel.setBeforeMethod(cls.getMethod(MagicianWebConstant.BEFORE, new Class[]{MagicianRequest.class}));
             interceptorModel.setAfterMethod(cls.getMethod(MagicianWebConstant.AFTER, new Class[]{MagicianRequest.class, Object.class}));
 

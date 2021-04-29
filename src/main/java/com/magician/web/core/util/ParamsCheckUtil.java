@@ -1,7 +1,7 @@
 package com.magician.web.core.util;
 
 import com.magician.web.core.annotation.Verification;
-import io.magician.tcp.http.request.MagicianRequest;
+import io.magician.tcp.codec.impl.http.request.MagicianRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

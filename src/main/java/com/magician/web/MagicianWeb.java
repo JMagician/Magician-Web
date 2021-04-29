@@ -1,10 +1,9 @@
 package com.magician.web;
 
-import com.magician.web.core.constant.MagicianWebConstant;
 import com.magician.web.core.util.MesUtil;
 import com.magician.web.execute.ApiExecute;
 import com.magician.web.load.ApiLoad;
-import io.magician.tcp.http.request.MagicianRequest;
+import io.magician.tcp.codec.impl.http.request.MagicianRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

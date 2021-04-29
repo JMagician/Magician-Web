@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.magician.web.core.constant.DataType;
 import com.magician.web.core.util.JSONUtil;
 import com.magician.web.core.util.ParamTypeUtil;
-import io.magician.tcp.http.model.MagicianFileUpLoad;
-import io.magician.tcp.http.request.MagicianRequest;
+import io.magician.tcp.codec.impl.http.model.MagicianFileUpLoad;
+import io.magician.tcp.codec.impl.http.request.MagicianRequest;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

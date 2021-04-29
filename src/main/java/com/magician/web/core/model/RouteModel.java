@@ -1,6 +1,6 @@
 package com.magician.web.core.model;
 
-import io.magician.tcp.http.constant.ReqMethod;
+import io.magician.tcp.codec.impl.http.constant.ReqMethod;
 
 import java.lang.reflect.Method;
 

@@ -1,6 +1,6 @@
 package com.magician.web.core.interceptor;
 
-import io.magician.tcp.http.request.MagicianRequest;
+import io.magician.tcp.codec.impl.http.request.MagicianRequest;
 
 /**
  * 拦截器基类

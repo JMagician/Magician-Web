@@ -1,7 +1,7 @@
 package com.magician.web.core.annotation;
 
 
-import io.magician.tcp.http.constant.ReqMethod;
+import io.magician.tcp.codec.impl.http.constant.ReqMethod;
 
 import java.lang.annotation.*;
 

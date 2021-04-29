@@ -1,5 +1,7 @@
 package com.magician.web.core.model;
 
+import com.magician.web.core.interceptor.MagicianInterceptor;
+
 import java.lang.reflect.Method;
 
 /**
@@ -20,7 +22,7 @@ public class InterceptorModel {
     /**
      * 拦截器对象
      */
-    private Object object;
+    private MagicianInterceptor magicianInterceptor;
     /**
      * 类型
      */
@@ -42,12 +44,12 @@ public class InterceptorModel {
         this.afterMethod = afterMethod;
     }
 
-    public Object getObject() {
-        return object;
+    public MagicianInterceptor getMagicianInterceptor() {
+        return magicianInterceptor;
     }
 
-    public void setObject(Object object) {
-        this.object = object;
+    public void setMagicianInterceptor(Object obj) {
+        this.magicianInterceptor = (MagicianInterceptor) obj;
     }
 
     public Class getCls() {

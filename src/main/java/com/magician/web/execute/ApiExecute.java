@@ -9,8 +9,8 @@ import com.magician.web.core.util.JSONUtil;
 import com.magician.web.core.util.MesUtil;
 import com.magician.web.core.util.ParamsCheckUtil;
 import com.magician.web.execute.model.ResponseInputStream;
-import io.magician.tcp.http.constant.ReqMethod;
-import io.magician.tcp.http.request.MagicianRequest;
+import io.magician.tcp.codec.impl.http.constant.ReqMethod;
+import io.magician.tcp.codec.impl.http.request.MagicianRequest;
 
 import java.lang.reflect.Method;
 import java.util.List;
