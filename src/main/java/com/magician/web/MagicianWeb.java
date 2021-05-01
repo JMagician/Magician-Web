@@ -27,8 +27,10 @@ public class MagicianWeb {
      * @param packageName
      * @return
      */
-    public MagicianWeb scan(String packageName){
+    public MagicianWeb scan(String packageName) throws Exception {
         MagicianWebConfig.setScanPath(packageName);
+        /* 加载资源 */
+        ApiLoad.load();
         return this;
     }
 
@@ -37,9 +39,6 @@ public class MagicianWeb {
      */
     public void request(MagicianRequest request){
         try {
-            /* 加载资源 */
-            ApiLoad.load();
-
             /* 执行业务逻辑 */
             ApiExecute.execute(request);
         } catch (Exception e){
