@@ -65,13 +65,20 @@ public class DemoController {
 
 ### 三、创建服务
 ```java
-Magician.createHttpServer().httpHandler("/", req -> {
+Magician.createTCPServer()
+                    .handler("/", req -> {
+                        MagicianRequest request = (MagicianRequest) req;
 
-                        MagicianWeb.createWeb()
-                                .scan(传入Controller所在的包名)
-                                .request(req);
+                        // 在http的handler里面调用web组件
+                        try{
+                            MagicianWeb.createWeb()
+                                    .scan("com.demo.controller")// controller和拦截器所在的包名
+                                    .request(request);
+                        } catch (Exception e){
+                        }
 
-                    }).bind(8080).start();
+                    })
+                    .bind(8080);
 ```
 ## 除此之外还实现了以下功能
 
