@@ -65,8 +65,7 @@ public class DemoController {
 
 ### 三、创建服务
 ```java
-Magician.createTCPServer()
-                    .handler("/", req -> {
+Magician.createTCPServer().handler("/", req -> {
                         MagicianRequest request = (MagicianRequest) req;
 
                         // 在http的handler里面调用web组件
@@ -77,8 +76,7 @@ Magician.createTCPServer()
                         } catch (Exception e){
                         }
 
-                    })
-                    .bind(8080);
+            }).bind(8080);
 ```
 ## 除此之外还实现了以下功能
 
