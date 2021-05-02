@@ -69,12 +69,9 @@ Magician.createTCPServer().handler("/", req -> {
                         MagicianRequest request = (MagicianRequest) req;
 
                         // 在http的handler里面调用web组件
-                        try{
-                            MagicianWeb.createWeb()
-                                    .scan("com.demo.controller")// controller和拦截器所在的包名
-                                    .request(request);
-                        } catch (Exception e){
-                        }
+                        MagicianWeb.createWeb()
+                                      .scan("com.demo.controller")// controller和拦截器所在的包名
+                                      .request(request);
 
             }).bind(8080);
 ```
