@@ -17,70 +17,107 @@
 <br/>
 
 <div align=center>
-Magician的官方Web组件
+Magician's official web component
 </div>
 
 
-## 项目简介
+## Introduction
 
-Magician-Web 是 Magician的官方Web组件，实现了以Controller的方式来进行参数的接收和响应
+Magician-Web is the official Web component of Magician, which implements the interface and response of parameters in the way of Controller
 
-## 安装步骤
+## installation steps
 
-### 一、导入依赖
+### 1. import dependencies
 
 ```xml
-<!-- 这个是本项目打的jar包 -->
+<!-- This is the jar package build by this project -->
 <dependency>
     <groupId>com.github.yuyenews</groupId>
     <artifactId>Magician-Web</artifactId>
-    <version>最新版</version>
+    <version>last version</version>
 </dependency>
 
-<!-- 这个是Magician，一个网络编程包，属于项目核心 -->
+<!-- This is Magician -->
 <dependency>
     <groupId>com.github.yuyenews</groupId>
     <artifactId>Magician</artifactId>
-    <version>最新版</version>
+    <version>last version</version>
 </dependency>
 
-<!-- 这个是日志包，支持任意可以跟slf4j桥接的包 -->
+<!-- This is the log package, which supports any package that can be bridged with slf4j -->
 <dependency>
     <groupId>org.slf4j</groupId>
     <artifactId>slf4j-jdk14</artifactId>
     <version>1.7.12</version>
 </dependency>
 ```
-### 二、创建Controller
+
+### 2. Create Controller
+
 ```java
 @Route("/demoController")
 public class DemoController {
 
-    @Route(value = "/demo", requestMethod = ReqMethod.POST)
-    public DemoVO demo(DemoVO demoVO){
-        return demoVO;
-    }
+	// You can use entity classes to receive parameters
+	@Route(value = "/demo", requestMethod = ReqMethod.POST)
+	public DemoVO demo(DemoVO demoVO){
+		return demoVO;
+	}
+
+	// You can also directly use MagicianRequest to get parameters
+	@Route(value = "/demob", requestMethod = ReqMethod.POST)
+	public String demob(MagicianRequest request){
+		return "ok";
+	}
+
+	// Download file
+	@Route(value = "/demob", requestMethod = ReqMethod.POST)
+	public ResponseInputStream demob(){
+		ResponseInputStream responseInputStream = new ResponseInputStream();
+		responseInputStream.setName("file name");
+		responseInputStream.setInputStream(file Stream);
+		return responseInputStream;
+	}
 }
 ```
 
-### 三、创建服务
+If the controller return is not a file stream, it will be converted to Json and returned, otherwise it will be processed as a file download
+
+### 3. Create HTTP Server
+
 ```java
 Magician.createTCPServer().handler("/", req -> {
                         MagicianRequest request = (MagicianRequest) req;
 
-                        // 在http的handler里面调用web组件
+                        // Call web components in http handler
                         MagicianWeb.createWeb()
-                                      .scan("com.demo.controller")// controller和拦截器所在的包名
-                                      .request(request);
+                                    .scan("com.demo.controller")// The name of the package where the controller and interceptor are located
+                                    .request(request);
 
-            }).bind(8080);
+               }).bind(8080);
 ```
-## 除此之外还实现了以下功能
 
-1. 自定义拦截器
-2. 注解式参数校验
-3. 自带JWT管理类
+**The scan method can be called multiple times to pass in multiple packages that need to be scanned, such as this:**
 
-## 开发资源
-- 开发文档: [http://magician-io.com/docs/web/index.html](http://magician-io.com/docs/web/index.html)
-- 使用示例: [https://github.com/yuyenews/Magician-Web-Example](https://github.com/yuyenews/Magician-Web-Example)
+```java
+Magician.createTCPServer().handler("/", req -> {
+                        MagicianRequest request = (MagicianRequest) req;
+
+                        // Call web components in http handler
+                        MagicianWeb.createWeb()
+                                    .scan("com.demo.controller")// The name of the package where the controller and interceptor are located
+                                    .scan("com.demo.controller")// The name of the package where the controller and interceptor are located
+                                    .request(request);
+
+               }).bind(8080);
+```
+
+## In addition, the following functions are also implemented
+
+1. Custom Interceptor
+2. Annotated parameter verification
+3. Comes with JWT management class
+
+## Documentation and examples
+- Document: [http://magician-io.com/docs/web/index.html](http://magician-io.com/docs/web/index.html)
+- Example: [https://github.com/yuyenews/Magician-Web-Example](https://github.com/yuyenews/Magician-Web-Example)
