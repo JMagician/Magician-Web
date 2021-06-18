@@ -119,5 +119,5 @@ Magician.createTCPServer().handler("/", req -> {
 3. Comes with JWT management class
 
 ## Documentation and examples
-- Document: [http://magician-io.com/docs/en/web/index.html](http://magician-io.com/docs/web/index.html)
+- Document: [http://magician-io.com/docs/en/web/index.html](http://magician-io.com/docs/en/web/index.html)
 - Example: [https://github.com/yuyenews/Magician-Web-Example](https://github.com/yuyenews/Magician-Web-Example)
