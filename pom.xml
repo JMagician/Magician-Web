@@ -6,7 +6,7 @@
 
     <groupId>com.github.yuyenews</groupId>
     <artifactId>Magician-Web</artifactId>
-    <version>1.1.5</version>
+    <version>1.1.6</version>
 
     <dependencies>
         <dependency>
@@ -18,7 +18,7 @@
         <dependency>
             <groupId>com.github.yuyenews</groupId>
             <artifactId>Magician</artifactId>
-            <version>1.1.6</version>
+            <version>1.1.15</version>
             <optional>true</optional>
         </dependency>
 
