@@ -8,11 +8,8 @@ import java.util.*;
 /**
  * 缓存管理
  */
-public class MagicianCacheManager {
-    /**
-     * 扫描出来的类
-     */
-    private static Set<String> classList;
+public class MagicianWebCacheManager {
+
     /**
      * 识别出来的接口
      */
@@ -22,20 +19,12 @@ public class MagicianCacheManager {
      */
     private static Map<String, List<InterceptorModel>> interceptorMap = new HashMap<>();
 
-    public static Set<String> getScanClassList() {
-        return classList;
-    }
-
-    public static void saveScanClassList(Set<String> classList) {
-        MagicianCacheManager.classList = classList;
-    }
-
     public static Map<String, RouteModel> getRouteMap() {
         return routeMap;
     }
 
     public static void saveRouteMap(Map<String, RouteModel> routeMap) {
-        MagicianCacheManager.routeMap = routeMap;
+        MagicianWebCacheManager.routeMap = routeMap;
     }
 
     public static Map<String, List<InterceptorModel>> getInterceptorMap() {

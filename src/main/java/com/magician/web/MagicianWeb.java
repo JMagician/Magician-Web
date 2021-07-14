@@ -23,16 +23,6 @@ public class MagicianWeb {
     }
 
     /**
-     * 扫描本项目的web接口
-     * @param packageName
-     * @return
-     */
-    public MagicianWeb scan(String packageName) {
-        MagicianWebConfig.setScanPath(packageName);
-        return this;
-    }
-
-    /**
      * 执行请求
      */
     public void request(MagicianRequest request){

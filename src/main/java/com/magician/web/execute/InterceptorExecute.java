@@ -1,6 +1,6 @@
 package com.magician.web.execute;
 
-import com.magician.web.core.cache.MagicianCacheManager;
+import com.magician.web.core.cache.MagicianWebCacheManager;
 import com.magician.web.core.interceptor.MagicianInterceptor;
 import com.magician.web.core.model.InterceptorModel;
 import io.magician.tcp.codec.impl.http.request.MagicianRequest;
@@ -22,7 +22,7 @@ public class InterceptorExecute {
      */
     public static List<InterceptorModel> getInterceptorModelList(String route){
         if(interMap == null){
-            interMap = MagicianCacheManager.getInterceptorMap();
+            interMap = MagicianWebCacheManager.getInterceptorMap();
         }
         return interMap.get(route);
     }

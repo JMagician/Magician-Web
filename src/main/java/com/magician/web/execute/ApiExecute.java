@@ -1,6 +1,6 @@
 package com.magician.web.execute;
 
-import com.magician.web.core.cache.MagicianCacheManager;
+import com.magician.web.core.cache.MagicianWebCacheManager;
 import com.magician.web.core.constant.MagicianWebConstant;
 import com.magician.web.core.interceptor.MagicianInterceptor;
 import com.magician.web.core.model.InterceptorModel;
@@ -28,7 +28,7 @@ public class ApiExecute {
      * @throws Exception
      */
     public static void execute(MagicianRequest request) throws Exception {
-        Map<String, RouteModel> routeModelMap = MagicianCacheManager.getRouteMap();
+        Map<String, RouteModel> routeModelMap = MagicianWebCacheManager.getRouteMap();
 
         String url = getUri(request.getUrl());
         RouteModel routeModel = routeModelMap.get(url);

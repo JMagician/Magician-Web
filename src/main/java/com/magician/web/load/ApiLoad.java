@@ -1,14 +1,14 @@
 package com.magician.web.load;
 
-import com.magician.web.MagicianWebConfig;
 import com.magician.web.core.annotation.Interceptor;
 import com.magician.web.core.annotation.Route;
-import com.magician.web.core.cache.MagicianCacheManager;
+import com.magician.web.core.cache.MagicianWebCacheManager;
 import com.magician.web.core.constant.MagicianWebConstant;
 import com.magician.web.core.model.InterceptorModel;
 import com.magician.web.core.model.RouteModel;
 import com.magician.web.core.util.MatchUtil;
-import com.magician.web.core.util.ScanUtil;
+import io.magician.common.cache.MagicianCacheManager;
+import io.magician.common.util.ScanUtil;
 import io.magician.tcp.codec.impl.http.request.MagicianRequest;
 
 import java.lang.reflect.Method;
@@ -20,18 +20,20 @@ import java.util.*;
 public class ApiLoad {
 
     /**
+     * 是否扫描过了，false否
+     */
+    private static boolean scan = false;
+
+    /**
      * 加载接口
      * @throws Exception
      */
     public static void load() throws Exception {
-        Set<String> scanClassList = MagicianCacheManager.getScanClassList();
-        if(scanClassList != null){
-            /* 如果他不为空说明已经执行过扫描了，所以直接断掉，不需要做重复的东西 */
+        if(scan){
             return;
         }
 
-        /* 扫描包下的类 */
-        scanClassList = ScanUtil.scanClassList(MagicianWebConfig.getScanPath());
+        Set<String> scanClassList = MagicianCacheManager.getScanClassList();
 
         /* 筛选并创建拦截器 */
         Map<String, InterceptorModel> interceptorModelMap = scanInterceptor(scanClassList);
@@ -40,16 +42,18 @@ public class ApiLoad {
         scanRoute(scanClassList);
 
         /* 将拦截器跟route比对后，分类存放 */
-        Map<String, RouteModel> routeModelMap = MagicianCacheManager.getRouteMap();
+        Map<String, RouteModel> routeModelMap = MagicianWebCacheManager.getRouteMap();
         if(routeModelMap != null && routeModelMap.size() > 0){
             for(String routePath : routeModelMap.keySet()){
                 for(String interPattern : interceptorModelMap.keySet()) {
                     if (MatchUtil.isMatch(interPattern, routePath)) {
-                        MagicianCacheManager.setInterceptorMap(routePath, interceptorModelMap.get(interPattern));
+                        MagicianWebCacheManager.setInterceptorMap(routePath, interceptorModelMap.get(interPattern));
                     }
                 }
             }
         }
+
+        scan = true;
     }
 
     /**
@@ -115,7 +119,7 @@ public class ApiLoad {
                 }
             }
         }
-        MagicianCacheManager.saveRouteMap(routeModelMap);
+        MagicianWebCacheManager.saveRouteMap(routeModelMap);
     }
 
     /**
