@@ -52,7 +52,24 @@ Magician-Web is the official Web component of Magician, which implements the int
 </dependency>
 ```
 
-### 2. Create Controller
+### 2. CreateHandler
+
+```java
+@TCPHandler(path = "/")
+public class MagicianWebHandler implements TCPBaseHandler<MagicianRequest> {
+
+    @Override
+    public void request(MagicianRequest magicianRequest) {
+        try{
+            MagicianWeb.createWeb()
+                    .request(magicianRequest);
+        } catch (Exception e){
+        }
+    }
+}
+```
+
+### 3. Create Controller
 
 ```java
 @Route("/demoController")
@@ -83,33 +100,12 @@ public class DemoController {
 
 If the controller return is not a file stream, it will be converted to Json and returned, otherwise it will be processed as a file download
 
-### 3. Create HTTP Server
+### 4. Create HTTP Server
 
 ```java
-Magician.createTCPServer().handler("/", req -> {
-                        MagicianRequest request = (MagicianRequest) req;
-
-                        // Call web components in http handler
-                        MagicianWeb.createWeb()
-                                    .scan("com.demo.controller")// The name of the package where the controller and interceptor are located
-                                    .request(request);
-
-               }).bind(8080);
-```
-
-**The scan method can be called multiple times to pass in multiple packages that need to be scanned, such as this:**
-
-```java
-Magician.createTCPServer().handler("/", req -> {
-                        MagicianRequest request = (MagicianRequest) req;
-
-                        // Call web components in http handler
-                        MagicianWeb.createWeb()
-                                    .scan("com.demo.controller")// The name of the package where the controller and interceptor are located
-                                    .scan("com.demo.controller")// The name of the package where the controller and interceptor are located
-                                    .request(request);
-
-               }).bind(8080);
+Magician.createTCPServer()
+                .scan("The package name of the handler")
+                .bind(8080);
 ```
 
 ## In addition, the following functions are also implemented
