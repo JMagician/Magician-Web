@@ -22,7 +22,7 @@ public class MatchUtil {
 			if(rule.length()==1){
 				return true;
 			}else{
-				String ru = rule.replaceAll("\\*", "([a-zA-Z1-9]+)");
+				String ru = rule.replaceAll("\\*", "([a-zA-Z1-9/]+)");
 				return str.matches(ru);
 			}
 		}else{

@@ -17,4 +17,5 @@ public class DataType {
     public static final String CHARACTER = "CHARACTER";
     public static final String LIST = "LIST";
     public static final String DATE = "DATE";
+    public static final String BIGDECIMAL = "BIGDECIMAL";
 }

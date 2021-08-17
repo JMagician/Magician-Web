@@ -11,6 +11,7 @@ import io.magician.tcp.codec.impl.http.request.MagicianRequest;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
@@ -151,6 +152,9 @@ public class BuildParams {
                 break;
             case DataType.BOOLEAN:
                 field.set(obj,Boolean.parseBoolean(valStr));
+                break;
+            case DataType.BIGDECIMAL:
+                field.set(obj,new BigDecimal(valStr));
                 break;
             case DataType.DATE:
                 String fmt = "yyyy-MM-dd HH:mm:ss";
