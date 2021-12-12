@@ -3,7 +3,7 @@ package com.magician.web.execute;
 import com.magician.web.core.cache.MagicianWebCacheManager;
 import com.magician.web.core.interceptor.MagicianInterceptor;
 import com.magician.web.core.model.InterceptorModel;
-import io.magician.tcp.codec.impl.http.request.MagicianRequest;
+import io.magician.application.request.MagicianRequest;
 
 import java.util.List;
 import java.util.Map;

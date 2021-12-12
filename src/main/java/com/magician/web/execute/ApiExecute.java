@@ -2,6 +2,7 @@ package com.magician.web.execute;
 
 import com.magician.web.core.cache.MagicianWebCacheManager;
 import com.magician.web.core.constant.MagicianWebConstant;
+import com.magician.web.core.constant.ReqMethod;
 import com.magician.web.core.interceptor.MagicianInterceptor;
 import com.magician.web.core.model.InterceptorModel;
 import com.magician.web.core.model.RouteModel;
@@ -9,8 +10,8 @@ import com.magician.web.core.util.JSONUtil;
 import com.magician.web.core.util.MesUtil;
 import com.magician.web.core.util.ParamsCheckUtil;
 import com.magician.web.execute.model.ResponseInputStream;
-import io.magician.tcp.codec.impl.http.constant.ReqMethod;
-import io.magician.tcp.codec.impl.http.request.MagicianRequest;
+import io.magician.application.request.MagicianRequest;
+import io.netty.handler.codec.http.HttpMethod;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -78,7 +79,7 @@ public class ApiExecute {
         /* 如果返回的是个流，就直接响应流 */
         if(result instanceof ResponseInputStream){
             ResponseInputStream inputStream = (ResponseInputStream)result;
-            request.getResponse().sendStream(inputStream.getName(), inputStream.getInputStream());
+            request.getResponse().sendStream(inputStream.getName(), inputStream.getBytes());
             return;
         }
 
@@ -91,9 +92,9 @@ public class ApiExecute {
      * @param request
      * @param text
      */
-    private static void sendText(MagicianRequest request, String text){
+    private static void sendText(MagicianRequest request, String text) throws Exception {
         request.getResponse()
-                .sendJson(200, text);
+                .sendJson(text);
     }
 
     /**
@@ -108,15 +109,15 @@ public class ApiExecute {
             return MesUtil.getMes(400,"没有找到这个接口[" + url + "]");
         }
 
-        String strMethod = request.getMethod().toUpperCase();
+        HttpMethod strMethod = request.getMethod();
         /* 如果请求方式是options，那就说明这是一个试探性的请求，直接响应即可 */
-        if(strMethod.equals(MagicianWebConstant.OPTIONS.toUpperCase())){
+        if(strMethod.equals(HttpMethod.OPTIONS)){
             return MagicianWebConstant.OPTIONS;
         }
 
         /* 接口上设置的请求方式 只要有一个匹配就校验通过 */
         for(ReqMethod reqMethod : routeModel.getReqMethods()){
-            if(reqMethod.toString().toUpperCase().equals(strMethod)){
+            if(reqMethod.getCode().equals(strMethod.name())){
                 return null;
             }
         }

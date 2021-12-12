@@ -7,8 +7,8 @@ import com.magician.web.core.constant.MagicianWebConstant;
 import com.magician.web.core.model.InterceptorModel;
 import com.magician.web.core.model.RouteModel;
 import com.magician.web.core.util.MatchUtil;
+import io.magician.application.request.MagicianRequest;
 import io.magician.common.cache.MagicianCacheManager;
-import io.magician.tcp.codec.impl.http.request.MagicianRequest;
 
 import java.lang.reflect.Method;
 import java.util.*;

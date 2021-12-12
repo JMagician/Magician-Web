@@ -1,8 +1,12 @@
 package com.magician.web.core.model;
 
-import io.magician.tcp.codec.impl.http.constant.ReqMethod;
+
+import com.magician.web.core.constant.ReqMethod;
+import io.netty.handler.codec.http.HttpMethod;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RouteModel {
 
@@ -54,5 +58,15 @@ public class RouteModel {
 
     public void setReqMethods(ReqMethod[] reqMethods) {
         this.reqMethods = reqMethods;
+//        if (reqMethods != null) {
+//            List<HttpMethod> reqMethodList = new ArrayList<>();
+//            for (ReqMethod method : reqMethods) {
+//                reqMethodList.add(HttpMethod.valueOf(method.getCode()));
+//            }
+//            if (this.reqMethods == null) {
+//                this.reqMethods = new HttpMethod[reqMethodList.size()];
+//            }
+//            this.reqMethods = reqMethodList.toArray(this.reqMethods);
+//        }
     }
 }

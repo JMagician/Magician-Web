@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.magician.web.core.constant.DataType;
 import com.magician.web.core.util.JSONUtil;
 import com.magician.web.core.util.ParamTypeUtil;
-import io.magician.tcp.codec.impl.http.model.MagicianFileUpLoad;
-import io.magician.tcp.codec.impl.http.request.MagicianRequest;
+import io.magician.application.request.MagicianRequest;
+import io.netty.handler.codec.http.multipart.MixedFileUpload;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -80,12 +80,15 @@ public class BuildParams {
             f.setAccessible(true);
 
             List<String> valList = request.getParams(f.getName());
-            Map<String, MagicianFileUpLoad> marsFileUpLoadMap = request.getFiles();
+            Map<String, List<MixedFileUpload>> marsFileUpLoadMap = request.getFileMap();
 
-            if(f.getType().equals(MagicianFileUpLoad.class) && marsFileUpLoadMap != null){
-                f.set(obj, marsFileUpLoadMap.get(f.getName()));
-            } else if(f.getType().equals(MagicianFileUpLoad[].class) && marsFileUpLoadMap != null && marsFileUpLoadMap.size() > 0){
-                putMarsFileUploads(f,obj,marsFileUpLoadMap);
+            if(f.getType().equals(MixedFileUpload.class) && marsFileUpLoadMap != null){
+                List<MixedFileUpload> mixedFileUpload = marsFileUpLoadMap.get(f.getName());
+                if (mixedFileUpload != null){
+                    f.set(obj, mixedFileUpload.get(0));
+                }
+            } else if(f.getType().equals(MixedFileUpload[].class) && marsFileUpLoadMap != null && marsFileUpLoadMap.size() > 0){
+                putMarsFileUploads(f,obj, marsFileUpLoadMap.get(f.getName()));
             } else if(valList != null && valList.size() > 0){
                 putAttr(f,obj,valList);
             }
@@ -97,14 +100,16 @@ public class BuildParams {
      * 给参数赋值
      * @param field 字段
      * @param obj 对象
-     * @param marsFileUpLoadMap 文件
      * @throws Exception 异常
      */
-    private static void putMarsFileUploads(Field field, Object obj, Map<String,MagicianFileUpLoad> marsFileUpLoadMap) throws Exception{
-        MagicianFileUpLoad[] marsFileUpLoads = new MagicianFileUpLoad[marsFileUpLoadMap.size()];
+    private static void putMarsFileUploads(Field field, Object obj,List<MixedFileUpload> marsFileUpLoadList) throws Exception{
+        if (marsFileUpLoadList == null) {
+            return;
+        }
+        MixedFileUpload[] marsFileUpLoads = new MixedFileUpload[marsFileUpLoadList.size()];
         int index = 0;
-        for(String key : marsFileUpLoadMap.keySet()){
-            marsFileUpLoads[index] = marsFileUpLoadMap.get(key);
+        for(MixedFileUpload item : marsFileUpLoadList){
+            marsFileUpLoads[index] = item;
             index++;
         }
         field.set(obj, marsFileUpLoads);

@@ -16,7 +16,7 @@ public class ResponseInputStream {
     /**
      * 流
      */
-    private InputStream inputStream;
+    private byte[] bytes;
 
     public String getName() {
         return name;
@@ -26,11 +26,11 @@ public class ResponseInputStream {
         this.name = name;
     }
 
-    public InputStream getInputStream() {
-        return inputStream;
+    public byte[] getBytes() {
+        return bytes;
     }
 
-    public void setInputStream(InputStream inputStream) {
-        this.inputStream = inputStream;
+    public void setBytes(byte[] bytes) {
+        this.bytes = bytes;
     }
 }

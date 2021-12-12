@@ -3,7 +3,7 @@ package com.magician.web;
 import com.magician.web.core.util.MesUtil;
 import com.magician.web.execute.ApiExecute;
 import com.magician.web.load.ApiLoad;
-import io.magician.tcp.codec.impl.http.request.MagicianRequest;
+import io.magician.application.request.MagicianRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +25,7 @@ public class MagicianWeb {
     /**
      * 执行请求
      */
-    public void request(MagicianRequest request){
+    public void request(MagicianRequest request) throws Exception {
         try {
             /* 加载资源 */
             ApiLoad.load();
@@ -36,7 +36,7 @@ public class MagicianWeb {
             logger.error("执行MagicianWeb出现异常", e);
 
             request.getResponse()
-                    .sendJson(200, MesUtil.getMes(500, e.getMessage()));
+                    .sendJson(MesUtil.getMes(500, e.getMessage()));
         }
     }
 }
