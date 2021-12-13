@@ -1,42 +1,21 @@
-<br/>
+<h1> 
+    <a href="https://magician-io.com">Magician-Web</a> ·
+    <img src="https://img.shields.io/badge/licenes-MIT-brightgreen.svg"/>
+    <img src="https://img.shields.io/badge/jdk-11+-brightgreen.svg"/>
+    <img src="https://img.shields.io/badge/maven-3.5.4+-brightgreen.svg"/>
+    <img src="https://img.shields.io/badge/release-master-brightgreen.svg"/>
+</h1>
 
-<div align=center>
-<img width="260px;" src="http://magician-io.com/img/logo-white.png"/>
-</div>
+Magician-Web 是Magician的官方 web组件，可以很方便的管理Controller，支持拦截器，会话管理，注解式参数校验，实体类接收参数等
 
-<br/>
+## 文档
 
-<div align=center>
+这个版本的文档还没出，jar也暂时还没传到中央库，尽请期待，不过可以自己编译，跟着示例玩一下试试
+[https://magician-io.com](https://magician-io.com)
 
-<img src="https://img.shields.io/badge/licenes-MIT-brightgreen.svg"/>
-<img src="https://img.shields.io/badge/jdk-11+-brightgreen.svg"/>
-<img src="https://img.shields.io/badge/maven-3.5.4+-brightgreen.svg"/>
-<img src="https://img.shields.io/badge/release-master-brightgreen.svg"/>
+## 示例
 
-</div>
-<br/>
-
-<div align=center>
-Magician's official web component
-</div>
-
-- master分支处于更新中状态，现在的最新源码在 NIO分支上，需要的话可以去NIO上拉取
-- master属于2.0版本的开发中代码，目前已完成90%，还剩websocket没完成
-- 2.0 将底层全部抛弃了，全部转向了netty，尽请期待哦
-
-- The master branch is in an updated state, the latest source code is now on the NIO branch, you can pull it from NIO if you need it
-- master is part of the 2.0 version of the code under development, and is currently 90% complete, with the websocket still to be completed.
-- 2.0 has dumped all the underlying layers and moved to netty, so look forward to that!
-
-
-
-## Introduction
-
-Magician-Web is the official Web component of Magician, which implements the interface and response of parameters in the way of Controller
-
-## installation steps
-
-### 1. import dependencies
+### 导入依赖
 
 ```xml
 <!-- This is the jar package build by this project -->
@@ -61,15 +40,16 @@ Magician-Web is the official Web component of Magician, which implements the int
 </dependency>
 ```
 
-### 2. CreateHandler
+### 创建核心handler
 
 ```java
-@TCPHandler(path = "/")
-public class MagicianWebHandler implements TCPBaseHandler<MagicianRequest> {
+@HttpHandler(path="/")
+public class DemoHandler implements HttpBaseHandler {
 
     @Override
-    public void request(MagicianRequest magicianRequest) {
+    public void request(MagicianRequest magicianRequest, MagicianResponse response) {
         try{
+            // 主要是这句
             MagicianWeb.createWeb()
                     .request(magicianRequest);
         } catch (Exception e){
@@ -78,7 +58,7 @@ public class MagicianWebHandler implements TCPBaseHandler<MagicianRequest> {
 }
 ```
 
-### 3. Create Controller
+### 创建 Controller
 
 ```java
 @Route("/demoController")
@@ -101,28 +81,17 @@ public class DemoController {
 	public ResponseInputStream demob(){
 		ResponseInputStream responseInputStream = new ResponseInputStream();
 		responseInputStream.setName("file name");
-		responseInputStream.setInputStream(file Stream);
+		responseInputStream.setBytes(file bytes);
 		return responseInputStream;
 	}
 }
 ```
 
-If the controller return is not a file stream, it will be converted to Json and returned, otherwise it will be processed as a file download
 
-### 4. Create HTTP Server
+### 启动 HTTP 服务
 
 ```java
-Magician.createTCPServer()
-                .scan("The package name of the handler")
+Magician.createHttp()
+                .scan("handler和controller所在的包名")
                 .bind(8080);
 ```
-
-## In addition, the following functions are also implemented
-
-1. Custom Interceptor
-2. Annotated parameter verification
-3. Comes with JWT management class
-
-## Documentation and examples
-- Document: [http://magician-io.com/docs/en/web/index.html](http://magician-io.com/docs/en/web/index.html)
-- Example: [https://github.com/yuyenews/Magician-Web-Example](https://github.com/yuyenews/Magician-Web-Example)
