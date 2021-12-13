@@ -37,7 +37,7 @@ public class ApiExecute {
         /* 校验请求是否符合规则 */
         String checkRouteResult = check(routeModel, request, url);
         if(checkRouteResult != null){
-            sendText(request, checkRouteResult);
+            request.getResponse().sendJson(checkRouteResult);
             return;
         }
 
@@ -47,7 +47,7 @@ public class ApiExecute {
         /* 校验传参 */
         String checkResult = ParamsCheckUtil.checkParam(params, url);
         if(checkResult != null){
-            sendText(request, checkResult);
+            request.getResponse().sendJson(checkResult);
             return;
         }
 
@@ -57,7 +57,7 @@ public class ApiExecute {
         /* 执行拦截器的before */
         Object interResult = InterceptorExecute.before(interceptorModelList, request);
         if(!MagicianInterceptor.SUCCESS.equals(String.valueOf(interResult))){
-            sendText(request, String.valueOf(interResult));
+            request.getResponse().sendJson(String.valueOf(interResult));
             return;
         }
 
@@ -72,7 +72,7 @@ public class ApiExecute {
         /* 执行拦截器的after */
         interResult = InterceptorExecute.after(interceptorModelList, request, result);
         if(!MagicianInterceptor.SUCCESS.equals(String.valueOf(interResult))){
-            sendText(request, String.valueOf(interResult));
+            request.getResponse().sendJson(String.valueOf(interResult));
             return;
         }
 
@@ -84,17 +84,7 @@ public class ApiExecute {
         }
 
         /* 如果返回值不不是流，则直接响应 */
-        sendText(request, JSONUtil.toJSONString(result));
-    }
-
-    /**
-     * 响应文字
-     * @param request
-     * @param text
-     */
-    private static void sendText(MagicianRequest request, String text) throws Exception {
-        request.getResponse()
-                .sendJson(text);
+        request.getResponse().sendJson(JSONUtil.toJSONString(result));
     }
 
     /**

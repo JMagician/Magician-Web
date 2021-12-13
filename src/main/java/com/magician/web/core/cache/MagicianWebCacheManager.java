@@ -15,7 +15,7 @@ public class MagicianWebCacheManager {
      */
     private static Map<String, RouteModel> routeMap;
     /**
-     * 识别出来，并根据route分类号的拦截器
+     * 识别出来，并根据route分类好的拦截器
      */
     private static Map<String, List<InterceptorModel>> interceptorMap = new HashMap<>();
 
