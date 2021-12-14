@@ -10,7 +10,6 @@ Magician-Web 是Magician的官方 web组件，可以很方便的管理Controller
 
 ## 文档
 
-这个版本的文档还没出，jar也暂时还没传到中央库，尽请期待，不过可以自己编译，跟着示例玩一下试试
 [https://magician-io.com](https://magician-io.com)
 
 ## 示例
