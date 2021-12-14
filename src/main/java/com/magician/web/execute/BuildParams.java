@@ -80,15 +80,14 @@ public class BuildParams {
             f.setAccessible(true);
 
             List<String> valList = request.getParams(f.getName());
-            Map<String, List<MixedFileUpload>> marsFileUpLoadMap = request.getFileMap();
 
-            if(f.getType().equals(MixedFileUpload.class) && marsFileUpLoadMap != null){
-                List<MixedFileUpload> mixedFileUpload = marsFileUpLoadMap.get(f.getName());
+            if(f.getType().equals(MixedFileUpload.class)){
+                MixedFileUpload mixedFileUpload = request.getFile(f.getName());
                 if (mixedFileUpload != null){
-                    f.set(obj, mixedFileUpload.get(0));
+                    f.set(obj, mixedFileUpload);
                 }
-            } else if(f.getType().equals(MixedFileUpload[].class) && marsFileUpLoadMap != null && marsFileUpLoadMap.size() > 0){
-                putMarsFileUploads(f,obj, marsFileUpLoadMap.get(f.getName()));
+            } else if(f.getType().equals(MixedFileUpload[].class)){
+                putMarsFileUploads(f,obj, request.getFiles(f.getName()));
             } else if(valList != null && valList.size() > 0){
                 putAttr(f,obj,valList);
             }

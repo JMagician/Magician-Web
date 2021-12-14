@@ -83,7 +83,7 @@ public class ApiExecute {
             return;
         }
 
-        /* 如果返回值不不是流，则直接响应 */
+        /* 如果返回值不是流，则直接响应 */
         request.getResponse().sendJson(JSONUtil.toJSONString(result));
     }
 
