@@ -76,6 +76,11 @@ public class ApiExecute {
             return;
         }
 
+        // 如果返回的是null，说明Controller里已经响应过了，所以不在需要响应
+        if(result == null){
+            return;
+        }
+
         /* 如果返回的是个流，就直接响应流 */
         if(result instanceof ResponseInputStream){
             ResponseInputStream inputStream = (ResponseInputStream)result;
