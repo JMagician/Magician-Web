@@ -6,15 +6,15 @@
     <img src="https://img.shields.io/badge/release-master-brightgreen.svg"/>
 </h1>
 
-Magician-Web 是Magician的官方 web组件，可以很方便的管理Controller，支持拦截器，会话管理，注解式参数校验，实体类接收参数等
+Magician-Web is the official web component of Magician, which can easily manage Controllers, support interceptors, session management, annotated parameter validation, entity class receiving parameters, etc.
 
-## 文档
+## Documentation
 
 [https://magician-io.com](https://magician-io.com)
 
-## 示例
+## Example
 
-### 导入依赖
+### Importing dependencies
 
 ```xml
 <!-- This is the jar package build by this project -->
@@ -39,7 +39,7 @@ Magician-Web 是Magician的官方 web组件，可以很方便的管理Controller
 </dependency>
 ```
 
-### 创建核心handler
+### Creating core handlers
 
 ```java
 @HttpHandler(path="/")
@@ -48,7 +48,6 @@ public class DemoHandler implements HttpBaseHandler {
     @Override
     public void request(MagicianRequest magicianRequest, MagicianResponse response) {
         try{
-            // 主要是这句
             MagicianWeb.createWeb()
                     .request(magicianRequest);
         } catch (Exception e){
@@ -57,7 +56,7 @@ public class DemoHandler implements HttpBaseHandler {
 }
 ```
 
-### 创建 Controller
+### Creating Controller
 
 ```java
 @Route("/demoController")
@@ -87,7 +86,7 @@ public class DemoController {
 ```
 
 
-### 启动 HTTP 服务
+### Start HTTP service
 
 ```java
 Magician.createHttp()
