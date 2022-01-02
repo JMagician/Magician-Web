@@ -16,13 +16,13 @@ public @interface Verification {
      * 最小值
      * @return
      */
-    String min();
+    String min() default "";
 
     /**
      * 最大值
      * @return
      */
-    String max();
+    String max() default "";
 
     /**
      * 正则
