@@ -21,14 +21,14 @@ Magician-Web is the official web component of Magician, which can easily manage 
 <dependency>
     <groupId>com.github.yuyenews</groupId>
     <artifactId>Magician-Web</artifactId>
-    <version>last version</version>
+    <version>2.0.1</version>
 </dependency>
 
 <!-- This is Magician -->
 <dependency>
     <groupId>com.github.yuyenews</groupId>
     <artifactId>Magician</artifactId>
-    <version>last version</version>
+    <version>2.0.1</version>
 </dependency>
 
 <!-- This is the log package, which supports any package that can be bridged with slf4j -->
