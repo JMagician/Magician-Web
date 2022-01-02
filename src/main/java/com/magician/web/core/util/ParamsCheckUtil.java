@@ -1,11 +1,13 @@
 package com.magician.web.core.util;
 
 import com.magician.web.core.annotation.Verification;
+import com.magician.web.core.constant.DataType;
 import io.magician.application.request.MagicianRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,12 +72,144 @@ public class ParamsCheckUtil {
                 /* 校验参数是否符合规则 */
                 Object val = field.get(obj);
                 int errorCode = 1128;
-                if(!reg(val, verification.reg())){
-                    return MesUtil.getMes(errorCode, verification.msg());
-                }
 
-                if(!notNull(verification, val)){
-                    return MesUtil.getMes(errorCode, verification.msg());
+                String fieldTypeName = field.getType().getSimpleName().toUpperCase();
+
+                switch (fieldTypeName){
+                    case DataType.INT:
+                    case DataType.INTEGER:
+                        if(notNull(verification, val) == false){
+                            return MesUtil.getMes(errorCode, verification.msg());
+                        }
+
+                        if(StringUtil.isNull(verification.min()) == false){
+                            if(val == null){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                            if(Integer.parseInt(val.toString()) < Integer.parseInt(verification.min())){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                        }
+                        if(StringUtil.isNull(verification.max()) == false){
+                            if(val == null){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                            if(Integer.parseInt(val.toString()) > Integer.parseInt(verification.max())){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                        }
+                        continue;
+                    case DataType.LONG:
+                        if(notNull(verification, val) == false){
+                            return MesUtil.getMes(errorCode, verification.msg());
+                        }
+
+                        if(StringUtil.isNull(verification.min()) == false){
+                            if(val == null){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                            if(Long.parseLong(val.toString()) < Long.parseLong(verification.min())){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                        }
+                        if(StringUtil.isNull(verification.max()) == false){
+                            if(val == null){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                            if(Long.parseLong(val.toString()) > Long.parseLong(verification.max())){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                        }
+                        continue;
+                    case DataType.DOUBLE:
+                        if(notNull(verification, val) == false){
+                            return MesUtil.getMes(errorCode, verification.msg());
+                        }
+
+                        if(StringUtil.isNull(verification.min()) == false){
+                            if(val == null){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                            if(Double.parseDouble(val.toString()) < Double.parseDouble(verification.min())){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                        }
+                        if(StringUtil.isNull(verification.max()) == false){
+                            if(val == null){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                            if(Double.parseDouble(val.toString()) > Double.parseDouble(verification.max())){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                        }
+                        continue;
+                    case DataType.FLOAT:
+                        if(notNull(verification, val) == false){
+                            return MesUtil.getMes(errorCode, verification.msg());
+                        }
+
+                        if(StringUtil.isNull(verification.min()) == false){
+                            if(val == null){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                            if(Float.parseFloat(val.toString()) < Float.parseFloat(verification.min())){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                        }
+                        if(StringUtil.isNull(verification.max()) == false){
+                            if(val == null){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                            if(Float.parseFloat(val.toString()) > Float.parseFloat(verification.max())){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                        }
+                        continue;
+                    case DataType.BIGDECIMAL:
+                        if(notNull(verification, val) == false){
+                            return MesUtil.getMes(errorCode, verification.msg());
+                        }
+
+                        if(StringUtil.isNull(verification.min()) == false){
+                            if(val == null){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                            if(new BigDecimal(val.toString()).compareTo(new BigDecimal(verification.min())) < 0){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                        }
+                        if(StringUtil.isNull(verification.max()) == false){
+                            if(val == null){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                            if(new BigDecimal(val.toString()).compareTo(new BigDecimal(verification.max())) > 0){
+                                return MesUtil.getMes(errorCode, verification.msg());
+                            }
+                        }
+                        continue;
+                    case DataType.STRING:
+                        if(!reg(val, verification.reg())){
+                            return MesUtil.getMes(errorCode, verification.msg());
+                        }
+                        if(!notNull(verification, val)){
+                            return MesUtil.getMes(errorCode, verification.msg());
+                        }
+                        continue;
+                    case DataType.SHORT:
+                    case DataType.BOOLEAN:
+                    case DataType.DATE:
+                    case DataType.BYTE:
+                    case DataType.CHAR:
+                    case DataType.CHARACTER:
+                        if(!notNull(verification, val)){
+                            return MesUtil.getMes(errorCode, verification.msg());
+                        }
+                        continue;
+                    default:
+                        if (field.getType().equals(String[].class) && !notNull(verification, val)){
+                            return MesUtil.getMes(errorCode, verification.msg());
+                        }
+                        continue;
                 }
             }
             return null;
@@ -104,33 +238,19 @@ public class ParamsCheckUtil {
     }
 
     /**
-     * 校验长度
-     * @param val 数据
-     * @param verification 注解
-     * @return 结果
-     */
-    private static boolean length(Verification verification, Object val){
-        long valLen = val.toString().length();
-        if(valLen < verification.minLength() || valLen > verification.maxLength()){
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * 非空校验
      * @param verification 注解
      * @param val 数据
      * @return 结果
      */
     private static boolean notNull(Verification verification, Object val){
-        if(!verification.notNull()){
+        if(verification.notNull() == false){
             return true;
         }
         if(StringUtil.isNull(val)){
             return false;
         }
-        return length(verification, val);
+        return true;
     }
 
     /**

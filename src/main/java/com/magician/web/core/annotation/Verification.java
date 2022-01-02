@@ -13,16 +13,16 @@ public @interface Verification {
     boolean notNull() default false;
 
     /**
-     * 最小长度
+     * 最小值
      * @return
      */
-    long minLength() default 0;
+    String min();
 
     /**
-     * 最大长度
+     * 最大值
      * @return
      */
-    long maxLength() default Long.MAX_VALUE;
+    String max();
 
     /**
      * 正则
