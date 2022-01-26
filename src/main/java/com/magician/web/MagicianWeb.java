@@ -3,8 +3,8 @@ package com.magician.web;
 import com.magician.web.cloud.config.CloudConfig;
 import com.magician.web.cloud.load.CloudLoad;
 import com.magician.web.commons.util.MsgUtil;
-import com.magician.web.mvc.execute.ApiExecute;
-import com.magician.web.mvc.load.ApiLoad;
+import com.magician.web.mvc.execute.MvcExecute;
+import com.magician.web.mvc.load.MvcLoad;
 import io.magician.application.request.MagicianRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,10 +90,10 @@ public class MagicianWeb {
     public static void request(MagicianRequest request) throws Exception {
         try {
             /* 加载资源 */
-            ApiLoad.load();
+            MvcLoad.load();
 
             /* 执行业务逻辑 */
-            ApiExecute.execute(request);
+            MvcExecute.execute(request);
         } catch (Exception e){
             logger.error("执行MagicianWeb出现异常", e);
 

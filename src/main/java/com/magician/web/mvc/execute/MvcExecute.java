@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * 接口执行
  */
-public class ApiExecute {
+public class MvcExecute {
 
     /**
      * 执行接口

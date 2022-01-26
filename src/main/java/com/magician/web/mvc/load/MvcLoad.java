@@ -1,5 +1,8 @@
 package com.magician.web.mvc.load;
 
+import com.magician.web.cloud.config.CloudConfig;
+import com.magician.web.cloud.route.CommunicationRoute;
+import com.magician.web.commons.util.StringUtil;
 import com.magician.web.mvc.core.annotation.Interceptor;
 import com.magician.web.mvc.core.annotation.Route;
 import com.magician.web.mvc.core.cache.MagicianWebCacheManager;
@@ -16,7 +19,7 @@ import java.util.*;
 /**
  * 加载接口
  */
-public class ApiLoad {
+public class MvcLoad {
 
     /**
      * 是否扫描过了，false否
@@ -33,6 +36,10 @@ public class ApiLoad {
         }
 
         Set<String> scanClassList = MagicianCacheManager.getScanClassList();
+        // 如果是微服务模式启动，则添加 CommunicationRoute 里面的两个接口
+        if(StringUtil.isNull(CloudConfig.getServerUrl()) == false){
+            scanClassList.add(CommunicationRoute.class.getName());
+        }
 
         /* 筛选并创建拦截器 */
         Map<String, InterceptorModel> interceptorModelMap = scanInterceptor(scanClassList);
