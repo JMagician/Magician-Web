@@ -9,6 +9,8 @@ import io.magician.application.request.MagicianRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.InetSocketAddress;
+
 /**
  * MagicianWeb
  */
@@ -50,6 +52,26 @@ public class MagicianWeb {
      */
     public MagicianWeb serverUrl(String url){
         CloudConfig.setServerUrl(url);
+        return this;
+    }
+
+    /**
+     * 设置请求微服务节点的超时时间
+     * @param timeout
+     * @return
+     */
+    public MagicianWeb timeout(long timeout){
+        CloudConfig.setTimeout(timeout);
+        return this;
+    }
+
+    /**
+     * 添加代理
+     * @param inetSocketAddress
+     * @return
+     */
+    public MagicianWeb proxy(InetSocketAddress inetSocketAddress){
+        CloudConfig.setProxy(inetSocketAddress);
         return this;
     }
 
