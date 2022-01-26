@@ -16,8 +16,6 @@ public class MagicianWeb {
 
     private static Logger logger = LoggerFactory.getLogger(MagicianWeb.class);
 
-    private static CloudConfig cloudConfig = new CloudConfig();
-
     /**
      * 创建一个web
      * @return
@@ -32,7 +30,7 @@ public class MagicianWeb {
      * @param url
      */
     public MagicianWeb connection(String url){
-        cloudConfig.setConnection(url);
+        CloudConfig.setConnection(url);
         return this;
     }
 
@@ -41,7 +39,7 @@ public class MagicianWeb {
      * @param name
      */
     public MagicianWeb serverName(String name){
-        cloudConfig.setServerName(name);
+        CloudConfig.setServerName(name);
         return this;
     }
 
@@ -51,7 +49,7 @@ public class MagicianWeb {
      * @param url
      */
     public MagicianWeb serverUrl(String url){
-        cloudConfig.setServerUrl(url);
+        CloudConfig.setServerUrl(url);
         return this;
     }
 
