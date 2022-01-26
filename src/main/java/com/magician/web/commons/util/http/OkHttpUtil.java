@@ -105,7 +105,7 @@ public class OkHttpUtil {
      * @return
      * @throws Exception
      */
-    public static Response get(String url, Object param) throws Exception {
+    public static Response get(String url, Map<String, String> header, Object param) throws Exception {
         StringBuilder urlBuilder = new StringBuilder(url);
         if(param != null){
             urlBuilder.append("?");
@@ -127,7 +127,7 @@ public class OkHttpUtil {
 
         Request request = new Request.Builder()
                 .url(urlBuilder.toString())
-                .headers(Headers.of(new HashMap<>()))
+                .headers(Headers.of(header))
                 .get()
                 .build();
 
