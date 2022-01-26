@@ -1,8 +1,10 @@
 package com.magician.web;
 
-import com.magician.web.core.util.MesUtil;
-import com.magician.web.execute.ApiExecute;
-import com.magician.web.load.ApiLoad;
+import com.magician.web.cloud.config.CloudConfig;
+import com.magician.web.cloud.load.CloudLoad;
+import com.magician.web.commons.util.MsgUtil;
+import com.magician.web.mvc.execute.ApiExecute;
+import com.magician.web.mvc.load.ApiLoad;
 import io.magician.application.request.MagicianRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,8 @@ public class MagicianWeb {
 
     private static Logger logger = LoggerFactory.getLogger(MagicianWeb.class);
 
+    private static CloudConfig cloudConfig = new CloudConfig();
+
     /**
      * 创建一个web
      * @return
@@ -23,9 +27,47 @@ public class MagicianWeb {
     }
 
     /**
-     * 执行请求
+     * 连接哪个节点
+     * 实现接口缓存数据 交换的
+     * @param url
      */
-    public void request(MagicianRequest request) throws Exception {
+    public MagicianWeb connection(String url){
+        cloudConfig.setConnection(url);
+        return this;
+    }
+
+    /**
+     * 服务名称
+     * @param name
+     */
+    public MagicianWeb serverName(String name){
+        cloudConfig.setServerName(name);
+        return this;
+    }
+
+    /**
+     * 服务URL
+     * 别的节点调用本节点的接口，需要以这个为前缀
+     * @param url
+     */
+    public MagicianWeb serverUrl(String url){
+        cloudConfig.setServerUrl(url);
+        return this;
+    }
+
+    /**
+     * 配置设置完成
+     * Magician服务启动前 调用
+     */
+    public void end(){
+        CloudLoad.communication();
+    }
+
+    /**
+     * 执行请求
+     * 给Magician的核心handler调用的
+     */
+    public static void request(MagicianRequest request) throws Exception {
         try {
             /* 加载资源 */
             ApiLoad.load();
@@ -36,7 +78,7 @@ public class MagicianWeb {
             logger.error("执行MagicianWeb出现异常", e);
 
             request.getResponse()
-                    .sendJson(MesUtil.getMes(500, e.getMessage()));
+                    .sendJson(MsgUtil.getMsg(500, e.getMessage()));
         }
     }
 }
