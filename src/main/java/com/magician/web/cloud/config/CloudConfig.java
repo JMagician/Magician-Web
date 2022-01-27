@@ -1,6 +1,7 @@
 package com.magician.web.cloud.config;
 
 import java.net.InetSocketAddress;
+import java.util.UUID;
 
 /**
  * 微服务配置
@@ -33,6 +34,11 @@ public class CloudConfig {
      * 超时时间
      */
     private static long timeout = 5000;
+
+    /**
+     * 秘钥，给客户端查询微服务的接口列表用的
+     */
+    private static String secretKey = "7a98121c-11d1-45f5-8c65-2fecb3948799";
 
     public static String getServerName() {
         return serverName;
@@ -72,5 +78,13 @@ public class CloudConfig {
 
     public static void setProxy(InetSocketAddress proxy) {
         CloudConfig.proxy = proxy;
+    }
+
+    public static String getSecretKey() {
+        return secretKey;
+    }
+
+    public static void setSecretKey(String secretKey) {
+        CloudConfig.secretKey = secretKey;
     }
 }

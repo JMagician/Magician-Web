@@ -7,6 +7,20 @@ public class LocalCacheRouteManager {
 
     private static Map<String, Map<String, LocalCacheRoute>>  localCacheRouteMaps = new ConcurrentHashMap<>();
 
+    private static String connectionHostName;
+
+    public static Map<String, Map<String, LocalCacheRoute>> getLocalCacheRouteMaps() {
+        return localCacheRouteMaps;
+    }
+
+    public static String getConnectionHostName() {
+        return connectionHostName;
+    }
+
+    public static void setConnectionHostName(String connectionHostName) {
+        LocalCacheRouteManager.connectionHostName = connectionHostName;
+    }
+
     public static LocalCacheRoute get(String serverName, String path){
         Map<String, LocalCacheRoute> localCacheRouteMap = localCacheRouteMaps.get(serverName);
         if(localCacheRouteMap == null){

@@ -3,6 +3,7 @@ package com.magician.web;
 import com.magician.web.cloud.config.CloudConfig;
 import com.magician.web.cloud.load.CloudLoad;
 import com.magician.web.commons.util.MsgUtil;
+import com.magician.web.commons.util.StringUtil;
 import com.magician.web.mvc.execute.MvcExecute;
 import com.magician.web.mvc.load.MvcLoad;
 import io.magician.application.request.MagicianRequest;
@@ -79,7 +80,24 @@ public class MagicianWeb {
      * 配置设置完成
      * Magician服务启动前 调用
      */
-    public void end(){
+    public void end() throws Exception {
+        if(StringUtil.isNull(CloudConfig.getServerName())){
+            throw new Exception("ServerName 不可以为空");
+        }
+        if(StringUtil.isNull(CloudConfig.getServerUrl())){
+            throw new Exception("ServerUrl 不可以为空");
+        }
+        if(StringUtil.isNull(CloudConfig.getConnection())){
+            throw new Exception("Connection 不可以为空");
+        }
+        if(StringUtil.isNull(CloudConfig.getSecretKey())){
+            throw new Exception("SecretKey 不可以为空");
+        }
+        if(CloudConfig.getTimeout() < 1){
+            throw new Exception("Timeout 必须大于0");
+        }
+
+        CloudLoad.initOwnerRouteInsertToLocalCacheRouteMap();
         CloudLoad.communication();
     }
 

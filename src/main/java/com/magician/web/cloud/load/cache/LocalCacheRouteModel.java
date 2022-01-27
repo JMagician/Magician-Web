@@ -4,6 +4,8 @@ public class LocalCacheRouteModel {
 
     private String serverName;
 
+    private String serverUrl;
+
     private String path;
 
     private String url;
@@ -18,6 +20,14 @@ public class LocalCacheRouteModel {
 
     public void setServerName(String serverName) {
         this.serverName = serverName;
+    }
+
+    public String getServerUrl() {
+        return serverUrl;
+    }
+
+    public void setServerUrl(String serverUrl) {
+        this.serverUrl = serverUrl;
     }
 
     public String getPath() {

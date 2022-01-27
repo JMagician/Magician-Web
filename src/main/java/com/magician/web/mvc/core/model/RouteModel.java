@@ -55,15 +55,5 @@ public class RouteModel {
 
     public void setReqMethods(ReqMethod[] reqMethods) {
         this.reqMethods = reqMethods;
-//        if (reqMethods != null) {
-//            List<HttpMethod> reqMethodList = new ArrayList<>();
-//            for (ReqMethod method : reqMethods) {
-//                reqMethodList.add(HttpMethod.valueOf(method.getCode()));
-//            }
-//            if (this.reqMethods == null) {
-//                this.reqMethods = new HttpMethod[reqMethodList.size()];
-//            }
-//            this.reqMethods = reqMethodList.toArray(this.reqMethods);
-//        }
     }
 }
