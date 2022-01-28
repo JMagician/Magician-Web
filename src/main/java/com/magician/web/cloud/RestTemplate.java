@@ -46,7 +46,7 @@ public class RestTemplate {
     public static <T> T sendUpload(String serverName, String routePath, List<FormDataParam> param, Class<T> cls) throws Exception {
         LocalCacheRouteModel localCacheRouteModel = getLocalCacheRouteModel(serverName, routePath);
         if(localCacheRouteModel == null){
-            return null;
+            throw new Exception("访问的接口不存在，serverName:[" + serverName + "], routePath:[" + routePath + "]");
         }
 
         Response response = OkHttpUtil.requestFormData(localCacheRouteModel.getUrl(), localCacheRouteModel.getMethod(), new HashMap<>(), param);
@@ -64,7 +64,7 @@ public class RestTemplate {
     public static InputStream sendResultStream(String serverName, String routePath, Object param) throws Exception {
         Response response = request(serverName, routePath, param);
         if(response == null){
-            return null;
+            throw new Exception("请求出现异常");
         }
         if(response.code() != 200){
             throw new Exception("请求出现异常，状态码:" + response.code());
@@ -85,7 +85,7 @@ public class RestTemplate {
 
         LocalCacheRouteModel localCacheRouteModel = getLocalCacheRouteModel(serverName, routePath);
         if(localCacheRouteModel == null){
-            return null;
+            throw new Exception("访问的接口不存在，serverName:[" + serverName + "], routePath:[" + routePath + "]");
         }
 
         Response response = null;
@@ -105,10 +105,10 @@ public class RestTemplate {
      * @param routePath
      * @return
      */
-    private static LocalCacheRouteModel getLocalCacheRouteModel(String serverName, String routePath){
+    private static LocalCacheRouteModel getLocalCacheRouteModel(String serverName, String routePath) throws Exception {
         LocalCacheRoute localCacheRoute = LocalCacheRouteManager.get(serverName, routePath);
         if(localCacheRoute == null){
-            return null;
+            throw new Exception("访问的接口不存在，serverName:[" + serverName + "], routePath:[" + routePath + "]");
         }
         return localCacheRoute.get();
     }
@@ -123,7 +123,7 @@ public class RestTemplate {
      */
     private static <T> T returnMessage(Response response, Class<T> cls) throws Exception {
         if(response == null){
-            return null;
+            throw new Exception("请求出现异常");
         }
         if(response.code() != 200){
             throw new Exception("请求出现异常，状态码:" + response.code());
