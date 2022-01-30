@@ -1,17 +1,38 @@
 package com.magician.web.cloud.load.cache;
 
+/**
+ * 接口实体
+ */
 public class LocalCacheRouteModel {
 
+    /**
+     * 所在的服务名称
+     */
     private String serverName;
 
+    /**
+     * 所在的服务地址
+     */
     private String serverUrl;
 
+    /**
+     * Route注解内设置的 path属性值
+     */
     private String path;
 
+    /**
+     * 接口全路径，http://xxx/xxx/xx
+     */
     private String url;
 
+    /**
+     * 请求方法
+     */
     private String method;
 
+    /**
+     * 缓存创建时间
+     */
     private long createTime = System.currentTimeMillis();
 
     public String getServerName() {

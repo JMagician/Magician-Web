@@ -2,6 +2,7 @@ package com.magician.web;
 
 import com.magician.web.cloud.config.CloudConfig;
 import com.magician.web.cloud.load.CloudLoad;
+import com.magician.web.cloud.load.task.CommunicationTask;
 import com.magician.web.commons.util.MsgUtil;
 import com.magician.web.commons.util.StringUtil;
 import com.magician.web.mvc.execute.MvcExecute;
@@ -99,6 +100,7 @@ public class MagicianWeb {
 
         CloudLoad.initOwnerRouteInsertToLocalCacheRouteMap();
         CloudLoad.communication();
+        CommunicationTask.run();
     }
 
     /**

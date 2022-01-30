@@ -67,6 +67,7 @@ public class LocalCacheRouteUtil {
                 }
             }
 
+            isThisServer = false;
             j++;
         }
     }

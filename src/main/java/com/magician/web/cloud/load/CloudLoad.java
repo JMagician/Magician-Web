@@ -16,8 +16,7 @@ import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 启动时 需要执行的一些逻辑
@@ -40,11 +39,11 @@ public class CloudLoad {
                     communicationParamModel
             );
 
-            if(response == null){
+            if (response == null) {
                 return;
             }
 
-            if(response.code() != 200){
+            if (response.code() != 200) {
                 throw new Exception("状态码:" + response.code());
             }
 
