@@ -24,7 +24,10 @@ public class MagicianWeb {
      * 创建一个web
      * @return
      */
-    public static MagicianWeb createWeb(){
+    public static MagicianWeb createWeb() throws Exception {
+        /* 加载资源 */
+        MvcLoad.load();
+
         return new MagicianWeb();
     }
 
@@ -109,9 +112,6 @@ public class MagicianWeb {
      */
     public static void request(MagicianRequest request) throws Exception {
         try {
-            /* 加载资源 */
-            MvcLoad.load();
-
             /* 执行业务逻辑 */
             MvcExecute.execute(request);
         } catch (Exception e){

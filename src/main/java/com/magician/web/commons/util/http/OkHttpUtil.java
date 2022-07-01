@@ -59,7 +59,7 @@ public class OkHttpUtil {
      * @return
      * @throws Exception
      */
-    public  static Response requestFormData(String url, String method, Map<String, String> header, List<FormDataParam> param) throws Exception {
+    public static Response requestFormData(String url, String method, Map<String, String> header, List<FormDataParam> param) throws Exception {
         method = method.toUpperCase();
         if (method.equals(ReqMethod.GET.getCode())) {
             throw new Exception("本方法不支持用GET方式发起请求， 你可以尝试使用 OkHttpUtil.get()");

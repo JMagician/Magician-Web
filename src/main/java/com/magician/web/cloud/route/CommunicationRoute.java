@@ -2,9 +2,7 @@ package com.magician.web.cloud.route;
 
 import com.magician.web.cloud.config.CloudConfig;
 import com.magician.web.cloud.config.Constants;
-import com.magician.web.cloud.load.cache.LocalCacheRoute;
 import com.magician.web.cloud.load.cache.LocalCacheRouteManager;
-import com.magician.web.cloud.load.cache.LocalCacheRouteModel;
 import com.magician.web.cloud.route.model.CommunicationParamModel;
 import com.magician.web.cloud.util.LocalCacheRouteUtil;
 import com.magician.web.commons.util.MsgUtil;
@@ -13,8 +11,6 @@ import com.magician.web.mvc.core.annotation.Route;
 import com.magician.web.mvc.core.constant.ReqMethod;
 import io.magician.application.request.MagicianRequest;
 
-import java.util.List;
-import java.util.Map;
 
 @Route(Constants.COMMUNICATION_ROUTE)
 public class CommunicationRoute {

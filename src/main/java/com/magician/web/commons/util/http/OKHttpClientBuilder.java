@@ -42,7 +42,7 @@ public class OKHttpClientBuilder {
 
             builder.hostnameVerifier((hostname, session) -> true);
             builder.callTimeout(CloudConfig.getTimeout(), TimeUnit.MILLISECONDS);
-            builder.connectTimeout(1000, TimeUnit.MILLISECONDS);
+            builder.connectTimeout(CloudConfig.getTimeout(), TimeUnit.MILLISECONDS);
             return builder;
         } catch (NoSuchAlgorithmException | KeyManagementException e) {
             logger.error("构建okHttpClient异常", e);
