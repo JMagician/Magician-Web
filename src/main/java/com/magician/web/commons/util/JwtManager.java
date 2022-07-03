@@ -56,7 +56,7 @@ public class JwtManager {
     }
 
     /**
-     * WT生成Token.
+     * JWT生成Token.
      * @param obj
      * @return str
      */
