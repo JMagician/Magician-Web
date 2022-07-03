@@ -21,7 +21,7 @@ Magician-Web is the official web component of Magician, which can easily manage 
 <dependency>
     <groupId>com.github.yuyenews</groupId>
     <artifactId>Magician-Web</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
 </dependency>
 
 <!-- This is Magician -->
@@ -48,8 +48,7 @@ public class DemoHandler implements HttpBaseHandler {
     @Override
     public void request(MagicianRequest magicianRequest, MagicianResponse response) {
         try{
-            MagicianWeb.createWeb()
-                    .request(magicianRequest);
+            MagicianWeb.request(magicianRequest);
         } catch (Exception e){
         }
     }
