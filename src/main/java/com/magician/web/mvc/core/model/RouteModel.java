@@ -5,6 +5,9 @@ import com.magician.web.mvc.core.constant.ReqMethod;
 
 import java.lang.reflect.Method;
 
+/**
+ * routing entity class
+ */
 public class RouteModel {
 
     private String route;

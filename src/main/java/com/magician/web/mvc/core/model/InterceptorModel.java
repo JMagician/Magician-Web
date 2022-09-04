@@ -5,26 +5,26 @@ import com.magician.web.mvc.core.interceptor.MagicianInterceptor;
 import java.lang.reflect.Method;
 
 /**
- * 拦截器实体类
+ * Interceptor entity class
  */
 public class InterceptorModel {
 
     /**
-     * 接口开始之前的方法
+     * method before the route is executed
      */
     private Method beforeMethod;
 
     /**
-     * 接口结束后的方法
+     * method after the route is executed
      */
     private Method afterMethod;
 
     /**
-     * 拦截器对象
+     * interceptor object
      */
     private MagicianInterceptor magicianInterceptor;
     /**
-     * 类型
+     * interceptor class
      */
     private Class cls;
 

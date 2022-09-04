@@ -6,16 +6,16 @@ import com.magician.web.mvc.core.model.RouteModel;
 import java.util.*;
 
 /**
- * 缓存管理
+ * Cache management
  */
 public class MagicianWebCacheManager {
 
     /**
-     * 识别出来的接口
+     * an identified interface
      */
     private static Map<String, RouteModel> routeMap;
     /**
-     * 识别出来，并根据route分类好的拦截器
+     * Interceptors that have been identified and classified according to route
      */
     private static Map<String, List<InterceptorModel>> interceptorMap = new HashMap<>();
 

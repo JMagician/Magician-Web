@@ -3,16 +3,16 @@ package com.magician.web.mvc.core.constant;
 public class MagicianWebConstant {
 
     /**
-     * UTF-8编码
+     * UTF-8 encoding
      */
     public static final String ENCODING = "UTF-8";
 
     /**
-     * 用来判断当前请求是否是一次预判
+     * Used to determine whether the current request is the OPTIONS method
      */
     public static final String OPTIONS = "OPTIONS";
 
-    /* **********************拦截器的两个方法名********************** */
+    /* ********************** Two method names of the interceptor ********************** */
     public static final String BEFORE = "before";
     public static final String AFTER = "after";
 }

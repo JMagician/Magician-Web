@@ -1,6 +1,5 @@
 package com.magician.web.mvc.execute.model;
 
-import java.io.InputStream;
 import java.util.UUID;
 
 /**
@@ -9,12 +8,12 @@ import java.util.UUID;
 public class ResponseInputStream {
 
     /**
-     * 名称
+     * file name
      */
     private String name = UUID.randomUUID().toString() + ".data";
 
     /**
-     * 流
+     * file byte array
      */
     private byte[] bytes;
 

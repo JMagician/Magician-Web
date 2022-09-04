@@ -16,12 +16,12 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
- * 构建参数
+ * build parameters
  */
 public class BuildParams {
 
     /**
-     * 构建MarsApi的传参
+     * Build parameters for MarsApi
      * @param method
      * @param request
      * @return
@@ -46,19 +46,19 @@ public class BuildParams {
             }
             return params;
         } catch (Exception e) {
-            throw new Exception("参数注入异常", e);
+            throw new Exception("parameter injection exception", e);
         }
     }
 
     /**
-     * 构建参数对象
+     * build parameter object
      * @param cls
      * @param request
      * @return
      * @throws Exception
      */
     private static Object getObject(Class cls, MagicianRequest request) throws Exception {
-        /* 如果是Json传参，那就直接转成Java对象返回 */
+        /* If it is a Json parameter, it is directly converted to a Java object and returned */
         if(ParamTypeUtil.isJSON(request.getContentType())){
             String paramJson = request.getJsonParam();
             if(paramJson == null){
@@ -67,7 +67,7 @@ public class BuildParams {
             return JSONUtil.toJavaObject(paramJson, cls);
         }
 
-        /* 如果不是Json传参，那就用反射来处理 */
+        /* If it is not a Json parameter, then use reflection to handle it */
         Object obj = cls.getDeclaredConstructor().newInstance();
         Field[] fields = cls.getDeclaredFields();
         for(Field f : fields){
@@ -95,10 +95,10 @@ public class BuildParams {
     }
 
     /**
-     * 给参数赋值
-     * @param field 字段
-     * @param obj 对象
-     * @throws Exception 异常
+     * assign a value to a parameter
+     * @param field
+     * @param obj
+     * @throws Exception
      */
     private static void putMarsFileUploads(Field field, Object obj,List<MixedFileUpload> marsFileUpLoadList) throws Exception{
         if (marsFileUpLoadList == null) {
@@ -114,11 +114,11 @@ public class BuildParams {
     }
 
     /**
-     * 给参数赋值
-     * @param field 字段
-     * @param obj 对象
-     * @param valList 数据
-     * @throws Exception 异常
+     * assign a value to a parameter
+     * @param field
+     * @param obj
+     * @param valList
+     * @throws Exception
      */
     private static void putAttr(Field field, Object obj, List<String> valList) throws Exception{
         String fieldTypeName = field.getType().getSimpleName().toUpperCase();

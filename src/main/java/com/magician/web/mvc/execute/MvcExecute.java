@@ -18,12 +18,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 接口执行
+ * execute routing
  */
 public class MvcExecute {
 
     /**
-     * 执行接口
+     * execute routing
      * @param request
      * @return
      * @throws Exception
@@ -34,7 +34,7 @@ public class MvcExecute {
         String url = getUri(request.getUrl());
         RouteModel routeModel = routeModelMap.get(url);
 
-        /* 校验请求是否符合规则 */
+        /* Check whether the request conforms to the rules */
         String checkRouteResult = check(routeModel, request, url);
         if(checkRouteResult != null){
             request.getResponse().sendJson(checkRouteResult);
@@ -44,24 +44,24 @@ public class MvcExecute {
         Method method = routeModel.getMethod();
         Object[] params = BuildParams.builder(method, request);
 
-        /* 校验传参 */
+        /* Check the parameters */
         String checkResult = ParamsCheckUtil.checkParam(params, url);
         if(checkResult != null){
             request.getResponse().sendJson(checkResult);
             return;
         }
 
-        /* 获取这个路由对应的拦截器 */
+        /* Get the interceptor corresponding to this route */
         List<InterceptorModel> interceptorModelList = InterceptorExecute.getInterceptorModelList(url);
 
-        /* 执行拦截器的before */
+        /* Execute the before method of the interceptor */
         Object interResult = InterceptorExecute.before(interceptorModelList, request);
         if(!MagicianInterceptor.SUCCESS.equals(String.valueOf(interResult))){
             request.getResponse().sendJson(String.valueOf(interResult));
             return;
         }
 
-        /* 执行Controller */
+        /* Execute Controller */
         Object result = null;
         if(params == null){
             result = method.invoke(routeModel.getObject());
@@ -69,31 +69,31 @@ public class MvcExecute {
             result = method.invoke(routeModel.getObject(), params);
         }
 
-        /* 执行拦截器的after */
+        /* Execute the after method of the interceptor */
         interResult = InterceptorExecute.after(interceptorModelList, request, result);
         if(!MagicianInterceptor.SUCCESS.equals(String.valueOf(interResult))){
             request.getResponse().sendJson(String.valueOf(interResult));
             return;
         }
 
-        // 如果返回的是null，说明Controller里已经响应过了，所以不在需要响应
+        // If it returns null, it means that the controller has already responded, so no response is required
         if(result == null){
             return;
         }
 
-        /* 如果返回的是个流，就直接响应流 */
+        /* If it returns ResponseInputStream, it responds directly to the stream */
         if(result instanceof ResponseInputStream){
             ResponseInputStream inputStream = (ResponseInputStream)result;
             request.getResponse().sendStream(inputStream.getName(), inputStream.getBytes());
             return;
         }
 
-        /* 如果返回值不是流，则直接响应 */
+        /* If the type of the return value is not ResponseInputStream, respond directly */
         request.getResponse().sendJson(JSONUtil.toJSONString(result));
     }
 
     /**
-     * 校验请求是否符合规则
+     * Check whether the request conforms to the rules
      * @param routeModel
      * @param request
      * @param url
@@ -101,27 +101,27 @@ public class MvcExecute {
      */
     private static String check(RouteModel routeModel, MagicianRequest request, String url){
         if(routeModel == null) {
-            return MsgUtil.getMsg(400,"没有找到这个接口[" + url + "]");
+            return MsgUtil.getMsg(400,"Could not find this route [" + url + "]");
         }
 
         HttpMethod strMethod = request.getMethod();
-        /* 如果请求方式是options，那就说明这是一个试探性的请求，直接响应即可 */
+        /* If the request method is options, it means that this is a tentative request, and you can respond directly */
         if(strMethod.equals(HttpMethod.OPTIONS)){
             return MagicianWebConstant.OPTIONS;
         }
 
-        /* 接口上设置的请求方式 只要有一个匹配就校验通过 */
+        /* The request method set on the route will pass as long as there is a match */
         for(ReqMethod reqMethod : routeModel.getReqMethods()){
             if(reqMethod.getCode().equals(strMethod.name())){
                 return null;
             }
         }
 
-        return MsgUtil.getMsg(400,"接口的请求方式为[" + JSONUtil.toJSONString(routeModel.getReqMethods()) + "]");
+        return MsgUtil.getMsg(400,"The request method accepted by the route is[" + JSONUtil.toJSONString(routeModel.getReqMethods()) + "]");
     }
 
     /**
-     * 获取纯净的uri
+     * get pure uri
      * @param uri
      * @return
      */

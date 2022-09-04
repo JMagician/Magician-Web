@@ -1,16 +1,16 @@
 package com.magician.web.commons.util;
 
 /**
- * 判断字符串是否与规则匹配
+ * Check if a string matches a rule
  * @author yuye
  *
  */
 public class MatchUtil {
 
 	/**
-	 * 判断带通配符的字符串与另一个字符串是否匹配
-	 * @param rule 规则
-	 * @param str 字符串
+	 * Check if a string with wildcards matches another string
+	 * @param rule
+	 * @param str
 	 * @return boolean
 	 */
 	public static Boolean isMatch(String rule,String str){

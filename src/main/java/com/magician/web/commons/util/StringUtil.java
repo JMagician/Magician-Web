@@ -1,15 +1,15 @@
 package com.magician.web.commons.util;
 
 /**
- * 字符串工具类
+ * String utility
  * @author yuye
  *
  */
 public class StringUtil {
 
 	/**
-	 * 将字符串首字母转成小写
-	 * @param str 参数
+	 * Convert the first letter of a string to lowercase
+	 * @param str
 	 * @return string
 	 */
 	public static String getFirstLowerCase(String str) {
@@ -20,8 +20,8 @@ public class StringUtil {
 	}
 	
 	/**
-	 * 判断字符串是否为空
-	 * @param obj 参数
+	 * Check if a string is empty
+	 * @param obj
 	 * @return string
 	 */
 	public static boolean isNull(Object obj) {

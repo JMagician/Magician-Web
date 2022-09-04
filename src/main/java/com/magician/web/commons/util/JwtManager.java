@@ -15,19 +15,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * JWT管理类
+ * JWT management class
  */
 public class JwtManager {
     /**
-     * token秘钥
+     * token key
      */
     private String secret = "b18af1cf-563a-4394-ac98-0b31013c7ba5";
     /**
-     * token 过期时间的单位
+     * The unit of token expiration time
      */
     private int calendarField = Calendar.MILLISECOND;
     /**
-     * token 过期时间
+     * token expiration time
      */
     private int calendarInterval = 86400;
 
@@ -47,7 +47,7 @@ public class JwtManager {
     }
 
     /**
-     * 创建一个JWT管理类
+     * Create a JWT management class
      * @return
      */
     public static JwtManager builder() {
@@ -56,7 +56,7 @@ public class JwtManager {
     }
 
     /**
-     * JWT生成Token.
+     * Convert an object to a Token
      * @param obj
      * @return str
      */
@@ -84,7 +84,7 @@ public class JwtManager {
     }
 
     /**
-     * 解析对象，并存入JWT
+     * Parse the object and store it in the JWT
      * @param builder
      * @param obj
      * @return
@@ -105,7 +105,7 @@ public class JwtManager {
     }
 
     /**
-     * 校验Token
+     * Check Token
      *
      * @param token
      * @return map
@@ -116,7 +116,7 @@ public class JwtManager {
     }
 
     /**
-     * 解密Token
+     * Decrypt Token into a Map object
      *
      * @param token
      * @return map
@@ -133,7 +133,7 @@ public class JwtManager {
     }
 
     /**
-     * 根据Token获取存进去的对象
+     * Get the stored object according to the Token
      * @param token
      * @param cls
      * @param <T>
@@ -165,7 +165,7 @@ public class JwtManager {
     }
 
     /**
-     * 给字段赋值
+     * assign a value to a field
      * @param obj
      * @param field
      * @param value
@@ -208,7 +208,7 @@ public class JwtManager {
     }
 
     /**
-     * 获取字段
+     * get field object
      * @param name
      * @param cls
      * @return

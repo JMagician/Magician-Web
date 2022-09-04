@@ -9,13 +9,13 @@ import java.lang.annotation.*;
 @Documented
 public @interface Route {
     /**
-     * 路径
+     * path
      * @return
      */
     String value();
 
     /**
-     * 请求方式
+     * request method
      * @return
      */
     ReqMethod[] requestMethod() default ReqMethod.GET;

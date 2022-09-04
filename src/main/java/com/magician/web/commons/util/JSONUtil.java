@@ -8,14 +8,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * JSON工具类
+ * JSON utility class
  */
 public class JSONUtil {
 
     private static Logger logger = LoggerFactory.getLogger(JSONUtil.class);
 
     /**
-     * 将任意对象转成另一个java对象
+     * Convert any object to another java object
      * @param obj
      * @param cls
      * @param <T>
@@ -33,13 +33,13 @@ public class JSONUtil {
                 return objectMapper.readValue(objectMapper.writeValueAsString(obj), cls);
             }
         } catch (Exception e){
-            logger.error("将对象通过jackson转成另一个Java对象异常", e);
+            logger.error("An exception occurs when converting an object to another Java object through jackson", e);
             return null;
         }
     }
 
     /**
-     * 将任意对象转成Map
+     * Convert any object to a Map
      * @param obj
      * @return
      */
@@ -55,7 +55,7 @@ public class JSONUtil {
     }
 
     /**
-     * 将任意对象转成JSON字符串
+     * Convert any object to JSON string
      * @param obj
      * @return
      */
@@ -71,7 +71,7 @@ public class JSONUtil {
                 return objectMapper.writeValueAsString(obj);
             }
         } catch (Exception e){
-            logger.error("将对象转成JSON字符串异常", e);
+            logger.error("Convert object to JSON string exception", e);
             return "";
         }
     }

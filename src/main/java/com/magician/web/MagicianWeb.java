@@ -15,21 +15,20 @@ public class MagicianWeb {
     private static Logger logger = LoggerFactory.getLogger(MagicianWeb.class);
 
     /**
-     * 执行请求
-     * 给Magician的核心handler调用的
+     * execute request
      */
     public static void request(MagicianRequest request) throws Exception {
         try {
-            /* 加载资源 */
+            /* load resource */
             MvcLoad.load();
 
-            /* 执行业务逻辑 */
+            /* Execute business logic */
             MvcExecute.execute(request);
         } catch (Exception e){
-            logger.error("执行MagicianWeb出现异常", e);
+            logger.error("An exception occurred while executing MagicianWeb", e);
 
             request.getResponse()
-                    .sendJson(MsgUtil.getMsg(500, e.getMessage()));
+                    .sendErrorMsg(500, e.getMessage());
         }
     }
 }

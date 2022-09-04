@@ -4,21 +4,21 @@ package com.magician.web.mvc.core.interceptor;
 import io.magician.application.request.MagicianRequest;
 
 /**
- * 拦截器基类
+ * Interceptor base class
  */
 public interface MagicianInterceptor {
 
     String SUCCESS = "success";
 
     /**
-     * 接口执行之前
+     * before routing
      * @param request
      * @return
      */
     Object before(MagicianRequest request);
 
     /**
-     * 接口执行之后
+     * after routing
      * @param request
      * @param result
      * @return

@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 执行拦截器
+ * execute interceptor
  */
 public class InterceptorExecute {
 
     private static  Map<String, List<InterceptorModel>> interMap;
 
     /**
-     * 获取这个路由对应的拦截器
+     * Get the interceptor corresponding to this route
      * @param route
      * @return
      */
@@ -28,7 +28,7 @@ public class InterceptorExecute {
     }
 
     /**
-     * 执行拦截器的before
+     * Execute the before method of the interceptor
      * @param interceptorModelList
      * @param request
      * @return
@@ -50,7 +50,7 @@ public class InterceptorExecute {
     }
 
     /**
-     * 执行拦截器的after
+     * Execute the after method of the interceptor
      * @param interceptorModelList
      * @param request
      * @param apiResult

@@ -1,7 +1,7 @@
 package com.magician.web.commons.constant;
 
 /**
- * 基本数据类型与包装器类型
+ * Basic Data Types and Wrapper Types
  */
 public class DataType {
     public static final String INT = "INT";

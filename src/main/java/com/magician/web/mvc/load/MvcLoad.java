@@ -14,37 +14,38 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 /**
- * 加载接口
+ * load route
  */
 public class MvcLoad {
 
     /**
-     * 是否扫描过了，false否
+     * Whether it has been scanned, false no
      */
     private static boolean scan = false;
 
     /**
-     * 加载接口
+     * load route
+     *
      * @throws Exception
      */
     public static void load() throws Exception {
-        if(scan){
+        if (scan) {
             return;
         }
 
         Set<String> scanClassList = MagicianCacheManager.getScanClassList();
 
-        /* 筛选并创建拦截器 */
+        /* Filter and create interceptors */
         Map<String, InterceptorModel> interceptorModelMap = scanInterceptor(scanClassList);
 
-        /* 筛选并创建接口 */
+        /* Filter and create routes */
         scanRoute(scanClassList);
 
-        /* 将拦截器跟route比对后，分类存放 */
+        /* After comparing the interceptor with the route, store it by category */
         Map<String, RouteModel> routeModelMap = MagicianWebCacheManager.getRouteMap();
-        if(routeModelMap != null && routeModelMap.size() > 0){
-            for(String routePath : routeModelMap.keySet()){
-                for(String interPattern : interceptorModelMap.keySet()) {
+        if (routeModelMap != null && routeModelMap.size() > 0) {
+            for (String routePath : routeModelMap.keySet()) {
+                for (String interPattern : interceptorModelMap.keySet()) {
                     if (MatchUtil.isMatch(interPattern, routePath)) {
                         MagicianWebCacheManager.setInterceptorMap(routePath, interceptorModelMap.get(interPattern));
                     }
@@ -56,15 +57,16 @@ public class MvcLoad {
     }
 
     /**
-     * 扫描拦截器
+     * Scan interceptor
+     *
      * @param scanClassList
      */
     private static Map<String, InterceptorModel> scanInterceptor(Set<String> scanClassList) throws Exception {
         Map<String, InterceptorModel> interceptorModelMap = new HashMap<>();
-        for(String className : scanClassList){
+        for (String className : scanClassList) {
             Class<?> cls = Class.forName(className);
             Interceptor interceptor = cls.getAnnotation(Interceptor.class);
-            if(interceptor == null){
+            if (interceptor == null) {
                 continue;
             }
 
@@ -81,30 +83,31 @@ public class MvcLoad {
     }
 
     /**
-     * 扫描接口
+     * scan route
+     *
      * @param scanClassList
      * @throws Exception
      */
     private static void scanRoute(Set<String> scanClassList) throws Exception {
         /* 从这些类中获取接口 */
         Map<String, RouteModel> routeModelMap = new HashMap<>();
-        for(String className : scanClassList){
+        for (String className : scanClassList) {
             Class<?> cls = Class.forName(className);
             Method[] methods = cls.getMethods();
-            for(Method method : methods){
-                if(method.getDeclaringClass().equals(cls)){
+            for (Method method : methods) {
+                if (method.getDeclaringClass().equals(cls)) {
                     Route methodRoute = method.getAnnotation(Route.class);
-                    if(methodRoute == null){
+                    if (methodRoute == null) {
                         continue;
                     }
                     Route clsRoute = cls.getAnnotation(Route.class);
-                    if(isVoid(method)){
-                        throw new Exception("["+method+"]方法没有返回类型");
+                    if (isVoid(method)) {
+                        throw new Exception("[" + method + "]method has no return type");
                     }
 
                     String path = getRoute(methodRoute, clsRoute);
-                    if(routeModelMap.containsKey(path)){
-                        throw new Exception("["+path+"]Route有重复");
+                    if (routeModelMap.containsKey(path)) {
+                        throw new Exception("[" + path + "]Route is duplicated");
                     }
 
                     RouteModel routeModel = new RouteModel();
@@ -122,32 +125,33 @@ public class MvcLoad {
     }
 
     /**
-     * 获取接口的请求路径
+     * Get the request path of the route
+     *
      * @param methodRoute
      * @param clsRoute
      * @return
      */
-    private static String getRoute(Route methodRoute, Route clsRoute){
+    private static String getRoute(Route methodRoute, Route clsRoute) {
         String methodPath = methodRoute.value();
-        if(methodPath.endsWith("/")){
+        if (methodPath.endsWith("/")) {
             methodPath = methodPath.substring(0, methodPath.length() - 1);
         }
-        if(methodPath.startsWith("/")){
+        if (methodPath.startsWith("/")) {
             methodPath = methodPath.substring(1);
         }
 
-        if(clsRoute != null){
+        if (clsRoute != null) {
             String clsPath = clsRoute.value();
-            if(clsPath.endsWith("/")){
+            if (clsPath.endsWith("/")) {
                 clsPath = clsPath.substring(0, clsPath.length() - 1);
             }
-            if(clsPath.startsWith("/")){
+            if (clsPath.startsWith("/")) {
                 clsPath = clsPath.substring(1);
             }
             methodPath = clsPath + "/" + methodPath;
         }
 
-        if(!methodPath.startsWith("/")){
+        if (!methodPath.startsWith("/")) {
             methodPath = "/" + methodPath;
         }
 
@@ -155,11 +159,12 @@ public class MvcLoad {
     }
 
     /**
-     * 返回值是否是void
+     * Whether the return type is void
+     *
      * @param method
      * @return
      */
-    private static boolean isVoid(Method method){
+    private static boolean isVoid(Method method) {
         Class cl = method.getReturnType();
         String st = cl.getName();
         return st.toLowerCase().trim().equals("void");

@@ -12,17 +12,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 校验前端传参
+ * Verify front-end parameters
  */
 public class ParamsCheckUtil {
 
     private static Logger logger = LoggerFactory.getLogger(ParamsCheckUtil.class);
 
     /**
-     * 校验参数
-     * @param params 参数集合
-     * @param url 路径
-     * @return 校验结果
+     * Check parameters
+     * @param params parameter set
+     * @param url request path
+     * @return Check result
      */
     public static String checkParam(Object[] params, String url){
         if(params == null){
@@ -47,29 +47,29 @@ public class ParamsCheckUtil {
     }
 
     /**
-     * 校验参数
-     * @param cls 参数类型
-     * @param obj 参数对象
-     * @return 校验结果
+     * Check parameters
+     * @param cls
+     * @param obj
+     * @return Check result
      */
     private static String checkParam(Class<?> cls, Object obj, String url) {
         try {
             Field[] fields = cls.getDeclaredFields();
             for(Field field : fields){
                 field.setAccessible(true);
-                /* 获取校验的注解 */
+                /* Get validation annotations */
                 Verification verification = field.getAnnotation(Verification.class);
                 if(verification == null){
                     continue;
                 }
 
-                /* 判断此注解是否生效与当前api，如果不生效那就直接跳入下一次循环 */
+                /* Determine whether this annotation is valid for the current api, if not, jump directly to the next loop */
                 String[] apis = verification.apis();
                 if(!isThisApi(apis, url)){
                     continue;
                 }
 
-                /* 校验参数是否符合规则 */
+                /* Check whether the parameters conform to the rules */
                 Object val = field.get(obj);
                 int errorCode = 1128;
 
@@ -214,16 +214,16 @@ public class ParamsCheckUtil {
             }
             return null;
         } catch (Exception e){
-            logger.error("校验参数出现异常",e);
+            logger.error("Validation parameter exception",e);
             return null;
         }
     }
 
     /**
-     * 校验正则
-     * @param val 数据
-     * @param reg 正则
-     * @return 结果
+     * Validate parameter values against regular expressions
+     * @param val
+     * @param reg
+     * @return
      */
     private static boolean reg(Object val,String reg){
         if(StringUtil.isNull(reg)){
@@ -238,10 +238,10 @@ public class ParamsCheckUtil {
     }
 
     /**
-     * 非空校验
-     * @param verification 注解
-     * @param val 数据
-     * @return 结果
+     * non-null check
+     * @param verification
+     * @param val
+     * @return
      */
     private static boolean notNull(Verification verification, Object val){
         if(verification.notNull() == false){
@@ -254,7 +254,7 @@ public class ParamsCheckUtil {
     }
 
     /**
-     * 校验apis列表里是否包含此api
+     * Check if this api is included in the apis list
      * @param url 此api
      * @param apis api列表
      * @return

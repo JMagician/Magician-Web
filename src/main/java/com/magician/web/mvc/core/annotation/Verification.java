@@ -7,37 +7,37 @@ import java.lang.annotation.*;
 @Documented
 public @interface Verification {
     /**
-     * 是否可为空
+     * Is it nullable
      * @return
      */
     boolean notNull() default false;
 
     /**
-     * 最小值
+     * minimum
      * @return
      */
     String min() default "";
 
     /**
-     * 最大值
+     * maximum
      * @return
      */
     String max() default "";
 
     /**
-     * 正则
+     * regular expression
      * @return
      */
     String reg() default "";
 
     /**
-     * 提示语
+     * error message
      * @return
      */
-    String msg() default "请填写正确的数据";
+    String msg() default "Please fill in the correct data";
 
     /**
-     * 作用域
+     * scope
      * @return
      */
     String[] apis() default {};
