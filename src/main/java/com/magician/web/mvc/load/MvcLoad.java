@@ -89,7 +89,6 @@ public class MvcLoad {
      * @throws Exception
      */
     private static void scanRoute(Set<String> scanClassList) throws Exception {
-        /* 从这些类中获取接口 */
         Map<String, RouteModel> routeModelMap = new HashMap<>();
         for (String className : scanClassList) {
             Class<?> cls = Class.forName(className);
